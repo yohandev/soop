@@ -10,11 +10,12 @@
 	left: 0;
 	top: 0;
 	width: 100%;
-    height: 100%;
+	height: 100%;
+	font-family: "Helevetica Neue", Helvetica, sans-serif;
 }
 
 #fontload
 {
-    font-family: jetbrains-mono;
+	font-family: 'Roboto', sans-serif;
     font-size: 0;
 }
