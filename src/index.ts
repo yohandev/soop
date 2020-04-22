@@ -1,6 +1,12 @@
 import { view, setup } from "paper"
-import block from "./block";
+import Block from "./Block";
 import "../res/styles.css";
+import SetXBlock from "./blocks/SetXBlock";
+import SetYBlock from "./blocks/SetYBlock";
+import GoToXYBlock from "./blocks/GoToXYBlock";
+import MethodBlock from "./blocks/MethodBlock";
+
+let one: Block, two: Block;
 
 function init()
 {
@@ -10,7 +16,9 @@ function init()
 
 	setup($("#editor")[0] as HTMLCanvasElement);
 
-	new block();
+	one = new SetXBlock();
+	two = new GoToXYBlock();
+	new MethodBlock();
 
 	view.draw();
 
@@ -20,7 +28,7 @@ function init()
 
 function render()
 {
-	console.log("rendering...");
+	//console.log("one: " + one.graphics.position.y + "two: " + two.graphics.position.y);
 }
 
 window.onload = init;
