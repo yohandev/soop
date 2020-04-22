@@ -1,9 +1,3 @@
-@font-face
-{
-	font-family: jetbrains-mono;
-	src: url('./JetBrainsMono-Regular.woff') format('woff');
-}
-
 #editor
 {
 	position: fixed;
@@ -11,7 +5,6 @@
 	top: 0;
 	width: 100%;
 	height: 100%;
-	font-family: "Helevetica Neue", Helvetica, sans-serif;
 }
 
 #fontload
