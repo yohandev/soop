@@ -4,6 +4,7 @@ import DefineBlock from "./blocks/DefineBlock";
 import SetXBlock from "./blocks/motion/SetXBlock";
 import EqualBlock from "./blocks/boolean/EqualBlock";
 import BlockBooleanField from "./blocks/fields/BlockBooleanField";
+import BlockBlockField from "./blocks/fields/BlockBlockField";
 
 function init()
 {
@@ -15,10 +16,13 @@ function init()
 	
 	const blocks = [new DefineBlock(), new SetXBlock()];
 
+	// equalllllssss chain
 	const eq = (blocks[1].fields[1] as BlockBooleanField).value = new EqualBlock();
-	
 	const eq2 = (eq.fields[0] as BlockBooleanField).value = new EqualBlock();
 	const eq3 = (eq2.fields[0] as BlockBooleanField).value = new EqualBlock();
+
+	// define set x to tester
+	(blocks[0].fields[1] as BlockBlockField).value = new SetXBlock();
 
 	blocks.forEach(b => b.render());
 	

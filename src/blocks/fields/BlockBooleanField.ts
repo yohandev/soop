@@ -1,5 +1,4 @@
 import BlockField from "./BlockField";
-import { BlockBase } from "../BlockBase";
 import { Path, Point } from "paper";
 import BooleanBlockBase from "../boolean/BooleanBlockBase";
 
