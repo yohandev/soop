@@ -1,0 +1,20 @@
+@font-face
+{
+	font-family: jetbrains-mono;
+	src: url('./JetBrainsMono-Regular.woff') format('woff');
+}
+
+#editor
+{
+	position: fixed;
+	left: 0;
+	top: 0;
+	width: 100%;
+    height: 100%;
+}
+
+#fontload
+{
+    font-family: jetbrains-mono;
+    font-size: 0;
+}
