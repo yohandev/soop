@@ -1,5 +1,5 @@
-import StackBlockBase from "./StackBlockBase";
-import BlockField from "./fields/BlockField";
+import StackBlockBase from "../StackBlockBase";
+import BlockField from "../fields/BlockField";
 
 export default abstract class MotionBlockBase extends StackBlockBase
 {

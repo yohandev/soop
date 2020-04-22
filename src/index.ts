@@ -2,6 +2,8 @@ import { view, setup, Path, Point } from "paper"
 import "../res/styles.css";
 import DefineBlock from "./blocks/DefineBlock";
 import SetXBlock from "./blocks/motion/SetXBlock";
+import EqualBlock from "./blocks/boolean/EqualBlock";
+import BlockBooleanField from "./blocks/fields/BlockBooleanField";
 
 function init()
 {
@@ -11,8 +13,13 @@ function init()
 
 	setup($("#editor")[0] as HTMLCanvasElement);
 	
-	const blocks = [new DefineBlock(), new SetXBlock()]
+	const blocks = [new DefineBlock(), new SetXBlock()];
+
+	const eq = (blocks[1].fields[1] as BlockBooleanField).value = new EqualBlock();
 	
+	const eq2 = (eq.fields[0] as BlockBooleanField).value = new EqualBlock();
+	const eq3 = (eq2.fields[0] as BlockBooleanField).value = new EqualBlock();
+
 	blocks.forEach(b => b.render());
 	
 	// COMMENTED OUT CODE BELOW IS DEV TOOL TO FIND WHICH VERTICES IN THE SVG PATHS HAVE TO DO WITH SCALING

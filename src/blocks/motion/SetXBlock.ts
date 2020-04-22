@@ -1,4 +1,4 @@
-import MotionBlockBase from "../MotionBlockBase";
+import MotionBlockBase from "./MotionBlockBase";
 import BlockTextField from "../fields/BlockTextField";
 import BlockBooleanField from "../fields/BlockBooleanField";
 

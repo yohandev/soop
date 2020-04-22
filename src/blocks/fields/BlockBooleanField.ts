@@ -1,12 +1,13 @@
 import BlockField from "./BlockField";
 import { BlockBase } from "../BlockBase";
 import { Path, Point } from "paper";
+import BooleanBlockBase from "../boolean/BooleanBlockBase";
 
 const SVG_DATA = `M16,0H32L48,16h0L32,32H16L0,16H0Z`;
 
 export default class BlockBooleanField extends BlockField
 {
-    public value: undefined | BlockBase; // TODO use boolean block base instead of low level block base
+    public value: undefined | BooleanBlockBase;
 
     constructor()
     {
@@ -22,6 +23,8 @@ export default class BlockBooleanField extends BlockField
             this.value.render();
 
             this.graphics = this.value.graphics;
+            this.graphics.translate(new Point(0, -26));
+            this.graphics.scale(0.8, this.graphics.bounds.leftCenter);
         }
         else // empty boolean slot
         {
