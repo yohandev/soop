@@ -2,9 +2,9 @@ import { view, setup, Path, Point } from "paper"
 import "../res/styles.css";
 import Script from "./Script";
 import DefineBlock from "./blocks/DefineBlock";
-import SetXBlock from "./blocks/motion/SetXBlock";
 import MultiplicationBlock from "./blocks/reporter/MultiplicationBlock";
 import AdditionBlock from "./blocks/reporter/AdditionBlock";
+import SetXBlock from "./editor/blocks/motion/SetXBlock";
 
 function init()
 {
@@ -25,12 +25,16 @@ function init()
 	// blocks.pop();
 
 	// blocks.forEach(b => b.render());
+	const a = new SetXBlock();
+	const b = a.next(new SetXBlock());
+	const c = b.next(new SetXBlock());
 
-	const myScript = new Script();
+	a.render();
+	// const myScript = new Script();
 
-	myScript.push(new DefineBlock(new SetXBlock()));
-	myScript.push(new SetXBlock());
-	myScript.push(new SetXBlock(new MultiplicationBlock(new AdditionBlock(new MultiplicationBlock()))));
+	// myScript.push(new DefineBlock(new SetXBlock()));
+	// myScript.push(new SetXBlock());
+	// myScript.push(new SetXBlock(new MultiplicationBlock(new AdditionBlock(new MultiplicationBlock()))));
 
 	// COMMENTED OUT CODE BELOW IS DEV TOOL TO FIND WHICH VERTICES IN THE SVG PATHS HAVE TO DO WITH SCALING
 	// const path = new Path(SVG_DATA);
@@ -49,7 +53,7 @@ function init()
 	// 	}
 	// }
 
-	myScript.render();
+	//myScript.render();
 	view.draw();
 
 	view.onFrame = render;

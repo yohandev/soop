@@ -9,8 +9,17 @@ export default class Script
 
     private tail: (IStackableBlock & BlockBase) | undefined;
 
-    constructor()
+    constructor(head?: (IStackableBlock & BlockBase))
     {
+        if (head)
+        {
+            let c = head;
+            while (c !== undefined)
+            {
+                this.tail = c;
+                c = c.next;
+            }
+        }
         this.head = undefined;
         this.graphics = undefined;
     }
