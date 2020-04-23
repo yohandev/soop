@@ -15,6 +15,7 @@ export default class BlockBlockField extends BlockField
 
     public create_graphics(): void // draw the block, but small
     {
+        this.value.draggable = false;
         this.value.render();
 
         this.graphics = this.value.graphics;

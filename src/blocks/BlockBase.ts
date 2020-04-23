@@ -1,5 +1,6 @@
 import { Item, Point, Group } from "paper";
 import BlockField from "./fields/BlockField";
+import { start_dragging, stop_dragging } from "../CursorDrag";
 
 const PADDING: number = 10;
 
@@ -11,10 +12,13 @@ export default abstract class BlockBase
     public color_fill: string;
     public color_stroke: string;
 
+    public draggable: boolean;
+
     constructor(fields?: BlockField[])
     {
         this.color_fill = 'white'; // defaults
         this.color_stroke = 'black';
+        this.draggable = true;
 
         if (fields)
         {
@@ -56,10 +60,10 @@ export default abstract class BlockBase
 
         this.add_width(width - init_width); // make underlying block width big enough
 
-        // TODO make draggable more... not crap
-        this.graphics.onMouseDrag = e =>
+        if (this.draggable)
         {
-            this.graphics.translate(e.delta);
+            this.graphics.onMouseDrag = e => start_dragging(this);
+            this.graphics.onMouseUp = e => stop_dragging(this);
         }
     }
 }
