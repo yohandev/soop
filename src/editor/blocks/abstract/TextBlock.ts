@@ -54,6 +54,11 @@ export default class TextBlock extends Block
     {
         return false; // text doesn't join
     }
+
+    public can_join(to: Block): boolean
+    {
+        return false; // text doesn't join
+    }
     
     public stroke(): string
     {

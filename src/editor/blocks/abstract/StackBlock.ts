@@ -15,7 +15,7 @@ export default abstract class StackBlock extends Block
         if (this.m_next)
         {
             this.m_next.render();
-            this.m_next.translate_recursively(0, this.height());
+            this.m_next.translate(0, this.height());
         }
     }
 
@@ -28,17 +28,41 @@ export default abstract class StackBlock extends Block
         return super.top();
     }
 
-    public translate_recursively(x: number, y: number): void
+    public iterate(func: (b: Block) => void): void
     {
-        super.translate_recursively(x, y);
+        super.iterate(func);
 
         if (this.m_next)
         {
-            this.m_next.translate_recursively(x, y);
+            this.m_next.iterate(func);
+        }
+    }
+
+    public translate(x: number, y: number): void
+    {
+        super.translate(x, y);
+
+        if (this.m_next)
+        {
+            this.m_next.translate(x, y);
         }
     }
 
     public join(to: Block): boolean
+    {
+        if (!this.can_join(to))
+        {
+            return false;
+        }
+
+        this.m_next = (to as StackBlock).m_next;
+        this.m_prev = (to as StackBlock);
+        (to as StackBlock).m_next = this;
+
+        return true;
+    }
+
+    public can_join(to: Block): boolean
     {
         if (!(to instanceof StackBlock))
         {
@@ -49,10 +73,6 @@ export default abstract class StackBlock extends Block
         {
             return false;
         }
-
-        this.m_next = to.m_next;
-        this.m_prev = to;
-        to.m_next = this;
 
         return true;
     }

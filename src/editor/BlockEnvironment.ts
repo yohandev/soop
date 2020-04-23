@@ -27,19 +27,37 @@ export namespace BlockEnvironment
 
     export function nearest(a: Block): Block | undefined
     {
-        let found = undefined;
+        let found: Block | undefined = undefined;
 
-        blocks.forEach(b =>
+        blocks.forEach(b => // iterate each loose block
         {
-            if (a === b)
+            b.iterate(b2 =>
             {
-                return;
-            }
-            
-            if (a.graphics().bounds.intersects(b.graphics().bounds))
-            {
-                found = b;
-            }
+                if (found !== undefined) // iterates from top to bottom, top block priority
+                {
+                    return;
+                }
+
+                if (a === b2) // don't connect to yourself(duh)
+                {
+                    return;
+                }
+
+                if (!a.can_join(b2)) // ignore incompatible
+                {
+                    return;
+                }
+
+                if (Math.abs(a.graphics().bounds.left - b2.graphics().bounds.left) >= 90) // connect from below, not left/right
+                {
+                    return;
+                }
+
+                if (a.graphics().bounds.intersects(b2.graphics().bounds)) // actually intersects
+                {
+                    found = b2;
+                }
+            });
         });
 
         return found;

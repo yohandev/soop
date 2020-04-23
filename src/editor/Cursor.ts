@@ -23,7 +23,7 @@ export namespace Cursor
             return false;
         }
 
-        dragging.translate_recursively(e.delta.x, e.delta.y);
+        dragging.translate(e.delta.x, e.delta.y);
 
         return true;
     }
@@ -36,7 +36,6 @@ export namespace Cursor
         {
             if (dragging.separate())
             {
-                console.log("seprated");
                 BlockEnvironment.add(dragging);
             }
         }
@@ -45,7 +44,6 @@ export namespace Cursor
 
         if (near)
         {
-            console.log(near);
             dragging.join(near);
 
             BlockEnvironment.remove(dragging);

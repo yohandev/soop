@@ -1,5 +1,6 @@
 import Block from "../Block";
 import { Path, Item } from "paper";
+import BooleanGhostBlock from "../ghost/BooleanGhostBlock";
 
 const SVG_DATA = `M20.71.5h105l20,20h0l-20,20h-105l-20-20h0Z`;
 const EXPAND_INDICES = [1, 2, 3, 4];
@@ -50,6 +51,15 @@ export default abstract class BooleanBlock extends Block
 
     public join(to: Block): boolean
     {
-        return false;
+        if (!this.can_join(to))
+        {
+            return false;
+        }
+        to.add_child(this);
+    }
+
+    public can_join(to: Block): boolean
+    {
+        return to instanceof BooleanGhostBlock;
     }
 }

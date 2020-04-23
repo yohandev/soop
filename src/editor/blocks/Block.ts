@@ -41,10 +41,13 @@ export default abstract class Block
     {
         let pos = new Point(0, 0);
 
-        if (this.graphics())
+        if (this.top().graphics())
         {
             pos = this.top().graphics().bounds.topLeft;
+        }
 
+        if (this.graphics())
+        {
             this.graphics().remove();
         }
 
@@ -62,7 +65,7 @@ export default abstract class Block
         this.children.forEach(c =>
         {
             c.render(); // 1. draw child in full size
-            c.translate_recursively(w, 0); // 2. adjust size position and padding
+            c.translate(w, 0); // 2. adjust size position and padding
             
             // @ts-ignore
             c.graphics().translate([0, this.top().height() / 2 - c.height() / 2]); // 2.5. correct height
@@ -74,12 +77,19 @@ export default abstract class Block
         this.expand(w - this.width(), h - this.height() + PADDING); // 3. accomodate for child size
     }
 
-    public translate_recursively(x: number, y: number): void
+    public translate(x: number, y: number): void
     {
         // @ts-ignore
         this.graphics().translate([x, y]);
 
-        this.children.forEach(c => c.translate_recursively(x, y));
+        this.children.forEach(c => c.translate(x, y));
+    }
+
+    public iterate(func: (b: Block) => void): void
+    {
+        func(this);
+
+        this.children.forEach(i => i.iterate(func));
     }
 
     protected abstract draw(): void;
@@ -91,6 +101,7 @@ export default abstract class Block
     protected abstract expand(w: number, h: number): void;
 
     public abstract separate(): boolean;
+    public abstract can_join(to: Block): boolean;
     public abstract join(to: Block): boolean;
 
     protected abstract draggable(): boolean;
