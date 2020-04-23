@@ -36,8 +36,20 @@ export namespace Cursor
         {
             if (dragging.separate())
             {
+                console.log("seprated");
                 BlockEnvironment.add(dragging);
             }
+        }
+        
+        const near = BlockEnvironment.nearest(dragging);
+
+        if (near)
+        {
+            console.log(near);
+            dragging.join(near);
+
+            BlockEnvironment.remove(dragging);
+            BlockEnvironment.render();
         }
 
         dragging = undefined;

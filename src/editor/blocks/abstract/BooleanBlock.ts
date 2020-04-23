@@ -1,7 +1,5 @@
 import Block from "../Block";
-import { Path } from "paper";
-import { Cursor } from "../../Cursor";
-import IGhostBlock from "../ghost/IGhostBlock";
+import { Path, Item } from "paper";
 
 const SVG_DATA = `M20.71.5h105l20,20h0l-20,20h-105l-20-20h0Z`;
 const EXPAND_INDICES = [1, 2, 3, 4];
@@ -10,38 +8,17 @@ export default abstract class BooleanBlock extends Block
 {
     protected path: Path;
 
-    protected draw(drag: boolean): void
+    protected draw(): void
     {
         this.path = new Path(SVG_DATA);
         
         this.path.fillColor = this.fill();
         this.path.strokeColor = this.stroke();
-
-        if (drag)
-        {
-            this.path.onMouseDrag = e => Cursor.drag(this, e);
-        }
     }
 
-    protected undraw(): void
+    public graphics(): Item
     {
-        if (this.path)
-        {
-            this.path.remove();
-        }
-    }
-
-    public separate(): boolean
-    {
-        if (!this.parent)
-        {
-            return false;
-        }
-
-        
-        this.parent = undefined;
-
-        return true;
+        return this.path;
     }
 
     public width(): number
@@ -57,16 +34,22 @@ export default abstract class BooleanBlock extends Block
     protected expand(w: number, h: number): void
     {
         EXPAND_INDICES.forEach(i => this.path.segments[i].point.x += w ); // TODO expand height too
-        //this.path.scale((w + this.width()) / this.width(), this.path.bounds.topLeft);
-        //const width = (this.width() + w) / this.width();
-        //const ratio = this.width() / this.height();
-
-        //this.path.scale(width, width * ratio, this.path.bounds.topLeft)
     }
 
-    public translate(x: number, y: number): void
+    public separate(): boolean
     {
-        // @ts-ignore
-        this.path.translate([x, y]);
+        if (!this.parent)
+        {
+            return false;
+        }
+
+        this.parent = undefined;
+
+        return true;
+    }
+
+    public join(to: Block): boolean
+    {
+        return false;
     }
 }

@@ -1,4 +1,4 @@
-import { Path } from "paper";
+import { Path, Item } from "paper";
 import StackBlock from "../abstract/StackBlock";
 import { Cursor } from "../../Cursor";
 
@@ -9,25 +9,17 @@ export default abstract class MotionBlock extends StackBlock
 {
     protected path: Path;
 
-    protected draw(drag: boolean): void
+    protected draw(): void
     {
         this.path = new Path(SVG_DATA);
 
         this.path.fillColor = this.fill();
         this.path.strokeColor = this.stroke();
-
-        if (drag)
-        {
-            this.path.onMouseDrag = e => Cursor.drag(this, e);
-        }
     }
 
-    protected undraw(): void
+    public graphics(): Item
     {
-        if (this.path)
-        {
-            this.path.remove();
-        }
+        return this.path;
     }
 
     public width(): number
@@ -37,19 +29,12 @@ export default abstract class MotionBlock extends StackBlock
 
     public height(): number
     {
-        //return this.path.bounds.height;
         return this.path.segments[13].point.y - this.path.segments[10].point.y;
     }
 
     protected expand(w: number, h: number): void
     {
         EXPAND_INDICES.forEach(i => this.path.segments[i].point.x += w ); // TODO expand height too
-    }
-
-    public translate(x: number, y: number): void
-    {
-        // @ts-ignore
-        this.path.translate([x, y]);
     }
 
     public fill(): string

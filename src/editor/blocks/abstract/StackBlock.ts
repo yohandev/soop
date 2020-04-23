@@ -19,6 +19,15 @@ export default abstract class StackBlock extends Block
         }
     }
 
+    protected top(): Block
+    {
+        if (this.m_prev)
+        {
+            return this.m_prev;
+        }
+        return super.top();
+    }
+
     public translate_recursively(x: number, y: number): void
     {
         super.translate_recursively(x, y);
@@ -27,6 +36,25 @@ export default abstract class StackBlock extends Block
         {
             this.m_next.translate_recursively(x, y);
         }
+    }
+
+    public join(to: Block): boolean
+    {
+        if (!(to instanceof StackBlock))
+        {
+            return false;
+        }
+
+        if (this.hat() || to.cap())
+        {
+            return false;
+        }
+
+        this.m_next = to.m_next;
+        this.m_prev = to;
+        to.m_next = this;
+
+        return true;
     }
 
     public separate(): boolean

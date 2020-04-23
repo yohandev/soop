@@ -1,3 +1,6 @@
+import { Item, Point } from "paper";
+import { Cursor } from "../Cursor";
+
 const PADDING: number = 10;
 
 export default abstract class Block
@@ -25,7 +28,7 @@ export default abstract class Block
         }
     }
 
-    private top(): Block
+    protected top(): Block
     {
         if (!this.parent)
         {
@@ -36,11 +39,22 @@ export default abstract class Block
 
     public render(): void
     {
-        // 1. draw child in full size
-        // 2. accomodate for child size
+        let pos = new Point(0, 0);
 
-        this.undraw();
-        this.draw(this.draggable());
+        if (this.graphics())
+        {
+            pos = this.top().graphics().bounds.topLeft;
+
+            this.graphics().remove();
+        }
+
+        this.draw();
+        this.graphics().translate(pos);
+
+        if (this.draggable())
+        {
+            this.graphics().onMouseDrag = e => Cursor.drag(this, e);
+        }
 
         let w = PADDING;
         let h = 0;
@@ -49,7 +63,9 @@ export default abstract class Block
         {
             c.render(); // 1. draw child in full size
             c.translate_recursively(w, 0); // 2. adjust size position and padding
-            c.translate(0, this.top().height() / 2 - c.height() / 2); // 2.5
+            
+            // @ts-ignore
+            c.graphics().translate([0, this.top().height() / 2 - c.height() / 2]); // 2.5. correct height
 
             w += c.width() + PADDING;
             h = Math.max(h, c.height());
@@ -60,13 +76,14 @@ export default abstract class Block
 
     public translate_recursively(x: number, y: number): void
     {
-        this.translate(x, y);
+        // @ts-ignore
+        this.graphics().translate([x, y]);
+
         this.children.forEach(c => c.translate_recursively(x, y));
     }
 
-    protected abstract translate(x: number, y: number): void;
-    protected abstract draw(drag: boolean): void;
-    protected abstract undraw(): void;
+    protected abstract draw(): void;
+    public abstract graphics(): Item;
 
     public abstract width(): number;
     public abstract height(): number;
@@ -74,6 +91,8 @@ export default abstract class Block
     protected abstract expand(w: number, h: number): void;
 
     public abstract separate(): boolean;
+    public abstract join(to: Block): boolean;
+
     protected abstract draggable(): boolean;
 
     public abstract fill(): string;

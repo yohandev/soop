@@ -1,10 +1,10 @@
 import Block from "../Block";
-import { PointText } from "paper";
+import { PointText, Item } from "paper";
 
 export default class TextBlock extends Block
 {
     private content: string;
-    private graphics: PointText;
+    private path: PointText;
 
     constructor(content: string)
     {
@@ -13,9 +13,9 @@ export default class TextBlock extends Block
         this.content = content;
     }
 
-    protected draw(drag: boolean): void
+    protected draw(): void
     {
-        this.graphics = new PointText
+        this.path = new PointText
         ({
             point: [0, 15],
             content: this.content,
@@ -25,22 +25,19 @@ export default class TextBlock extends Block
         });
     }
 
-    protected undraw(): void
+    public graphics(): Item
     {
-        if (this.graphics)
-        {
-            this.graphics.remove();
-        }
+        return this.path;
     }
 
     public width(): number
     {
-        return this.graphics.bounds.width;
+        return this.path.bounds.width;
     }
 
     public height(): number
     {
-        return this.graphics.bounds.height;
+        return this.path.bounds.height;
     }
 
     protected expand(w: number, h: number): void
@@ -53,10 +50,9 @@ export default class TextBlock extends Block
         return false; // text doesn't separate
     }
 
-    public translate(x: number, y: number): void
+    public join(to: Block): boolean
     {
-        // @ts-ignore
-        this.graphics.translate([x, y]);
+        return false; // text doesn't join
     }
     
     public stroke(): string

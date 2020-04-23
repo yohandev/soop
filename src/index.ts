@@ -12,11 +12,11 @@ function init()
 	Cursor.init(); // init cursor
 	BlockEnvironment.init();
 
-	const a = new SetXBlock();
-	const b = a.next(new SetYBlock());
-	const c = b.next(new SetXBlock());
+	BlockEnvironment.add(new SetXBlock())
+	BlockEnvironment.add(new SetYBlock())
+	BlockEnvironment.add(new SetXBlock())
 
-	a.render();
+	BlockEnvironment.render();
 	// const myScript = new Script();
 
 	// myScript.push(new DefineBlock(new SetXBlock()));
