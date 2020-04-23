@@ -1,5 +1,5 @@
 import { Group, Item } from "paper";
-import { BlockBase } from "../BlockBase";
+import BlockBase from "../BlockBase";
 
 export type BlockFieldType = 'text' | 'icon' | 'block' | 'reporter' | 'boolean';
 

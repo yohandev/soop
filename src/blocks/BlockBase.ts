@@ -3,7 +3,7 @@ import BlockField from "./fields/BlockField";
 
 const PADDING: number = 10;
 
-export abstract class BlockBase
+export default abstract class BlockBase
 {
     public fields: BlockField[];
     public graphics: Group;
@@ -11,7 +11,7 @@ export abstract class BlockBase
     public color_fill: string;
     public color_stroke: string;
 
-    constructor(fields: BlockField[] | undefined)
+    constructor(fields?: BlockField[])
     {
         this.color_fill = 'white'; // defaults
         this.color_stroke = 'black';

@@ -1,21 +1,27 @@
-import { BlockBase } from "./BlockBase";
+import BlockBase from "./BlockBase";
 import { Path } from "paper";
 import BlockTextField from "./fields/BlockTextField";
 import BlockBlockField from "./fields/BlockBlockField";
+import HatBlockBase from "./HatBlockBase";
 
 const SVG_DATA: string = `M.5,20.5a20,20,0,0,1,20-20h92a20,20,0,0,1,20,20v52a4,4,0,0,1-4,4h-80a5.2,5.2,0,0,0-4,2l-4,4a5.2,5.2,0,0,1-4,2h-12a5.2,5.2,0,0,1-4-2l-4-4a5.2,5.2,0,0,0-4-2h-8a4,4,0,0,1-4-4Z`;
 const EXPAND_INDICES = [2, 3, 4, 5];
 
-export default class DefineBlock extends BlockBase
+export default class DefineBlock extends HatBlockBase
 {
     private path: Path;
 
-    constructor()
+    constructor(block?: BlockBase)
     {
         super([new BlockTextField("define"), new BlockBlockField()]);
 
         this.color_fill = '#ff6680';
         this.color_stroke = '#f35';
+
+        if (block)
+        {
+            (this.fields[1] as BlockBlockField).value = block;
+        }
     }
 
     protected create_graphics(): paper.Item
@@ -39,5 +45,10 @@ export default class DefineBlock extends BlockBase
         {
             this.path.segments[i].point.x += w;
         });
+    }
+
+    public height(): number
+    {
+        return this.path.segments[5].point.y - this.path.segments[2].point.y;
     }
 }

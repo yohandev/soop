@@ -1,4 +1,4 @@
-import { BlockBase } from "../BlockBase";
+import BlockBase from "../BlockBase";
 import { Path } from "paper";
 import BlockField from "../fields/BlockField";
 

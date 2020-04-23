@@ -1,14 +1,10 @@
 import { view, setup, Path, Point } from "paper"
 import "../res/styles.css";
+import Script from "./Script";
 import DefineBlock from "./blocks/DefineBlock";
 import SetXBlock from "./blocks/motion/SetXBlock";
-import EqualBlock from "./blocks/boolean/EqualBlock";
-import BlockBooleanField from "./blocks/fields/BlockBooleanField";
-import BlockBlockField from "./blocks/fields/BlockBlockField";
 import MultiplicationBlock from "./blocks/reporter/MultiplicationBlock";
-import BlockReporterField from "./blocks/fields/BlockReporterField";
 import AdditionBlock from "./blocks/reporter/AdditionBlock";
-import { BlockBase } from "./blocks/BlockBase";
 
 function init()
 {
@@ -18,18 +14,24 @@ function init()
 
 	setup($("#editor")[0] as HTMLCanvasElement);
 	
-	const blocks: BlockBase[] = [new DefineBlock(), new SetXBlock(), new MultiplicationBlock()];
+	// const blocks: BlockBase[] = [new DefineBlock(), new SetXBlock(), new MultiplicationBlock()];
 
-	// define set x to tester
-	(blocks[0].fields[1] as BlockBlockField).value = new SetXBlock();
+	// // define set x to tester
+	// (blocks[0].fields[1] as BlockBlockField).value = new SetXBlock();
 
-	// arithmetic chain
-	(blocks[2].fields[0] as BlockReporterField).value = new AdditionBlock();
-	(blocks[1].fields[1] as BlockReporterField).value = blocks[2] as MultiplicationBlock;
-	blocks.pop();
+	// // arithmetic chain
+	// (blocks[2].fields[0] as BlockReporterField).value = new AdditionBlock();
+	// (blocks[1].fields[1] as BlockReporterField).value = blocks[2] as MultiplicationBlock;
+	// blocks.pop();
 
-	blocks.forEach(b => b.render());
-	
+	// blocks.forEach(b => b.render());
+
+	const myScript = new Script();
+
+	myScript.push(new DefineBlock(new SetXBlock()));
+	myScript.push(new SetXBlock());
+	myScript.push(new SetXBlock(new MultiplicationBlock(new AdditionBlock(new MultiplicationBlock()))));
+
 	// COMMENTED OUT CODE BELOW IS DEV TOOL TO FIND WHICH VERTICES IN THE SVG PATHS HAVE TO DO WITH SCALING
 	// const path = new Path(SVG_DATA);
 	// path.fillColor = 'green';
@@ -47,6 +49,7 @@ function init()
 	// 	}
 	// }
 
+	myScript.render();
 	view.draw();
 
 	view.onFrame = render;

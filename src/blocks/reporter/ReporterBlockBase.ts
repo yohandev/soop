@@ -1,4 +1,4 @@
-import { BlockBase } from "../BlockBase";
+import BlockBase from "../BlockBase";
 import { Path } from "paper";
 import BlockField from "../fields/BlockField";
 
@@ -9,7 +9,7 @@ export default abstract class ReporterBlockBase extends BlockBase
 {
     protected path: Path;
 
-    protected constructor(color: 'green' | 'blue', fields: BlockField[] | undefined)
+    protected constructor(color: 'green' | 'blue', fields?: BlockField[])
     {
         super(fields);
 

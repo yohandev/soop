@@ -3,7 +3,7 @@ import BlockField from "../fields/BlockField";
 
 export default abstract class MotionBlockBase extends StackBlockBase
 {
-    protected constructor(fields: BlockField[] | undefined)
+    protected constructor(fields?: BlockField[])
     {
         super(fields);
 

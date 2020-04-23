@@ -1,5 +1,5 @@
 import BlockField from "./BlockField";
-import { BlockBase } from "../BlockBase";
+import BlockBase from "../BlockBase";
 import { Point } from "paper";
 
 export default class BlockBlockField extends BlockField
