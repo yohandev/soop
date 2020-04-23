@@ -46,4 +46,6 @@ export default abstract class StackBlockBase extends BlockBase implements IStack
     {
         return this.path.segments[13].point.y - this.path.segments[10].point.y;
     }
+
+    next: (IStackableBlock & BlockBase) | undefined;
 }

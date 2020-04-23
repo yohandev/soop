@@ -4,22 +4,32 @@ import IStackableBlock from "./blocks/IStackableBlock";
 
 export default class Script
 {
-    public blocks: (IStackableBlock & BlockBase)[];
+    public head: (IStackableBlock & BlockBase) | undefined;
     public graphics: Group;
+
+    private tail: (IStackableBlock & BlockBase) | undefined;
 
     constructor()
     {
-        this.blocks = [];
+        this.head = undefined;
         this.graphics = undefined;
     }
 
     public push(block: IStackableBlock & BlockBase)
     {
-        const peek = this.blocks[this.blocks.length - 1];
+        if (this.tail == null)
+        {
+            this.head = this.tail = block;
+
+            return;
+        }
+
+        const peek = this.tail;
 
         if (peek == undefined || (block.this_can_go_below(peek) && peek.other_can_put_below(block)))
         {
-            this.blocks.push(block);
+            peek.next = block;
+            this.tail = block;
         }
         else
         {
@@ -37,14 +47,18 @@ export default class Script
         this.graphics = new Group(); // create new group
 
         let h = 0;
-        this.blocks.forEach(b =>
+        let c = this.head;
+
+        while (c != undefined)
         {
-           b.render(); // render invidiual block
+           c.render(); // render invidiual block
 
-           b.graphics.translate(new Point(0, h)); // move down
-           h += b.height();
+           c.graphics.translate(new Point(0, h)); // move down
+           h += c.height();
 
-           this.graphics.addChild(b.graphics);
-        });
+           this.graphics.addChild(c.graphics);
+
+           c = c.next;
+        }
     }
 }

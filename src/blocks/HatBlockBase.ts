@@ -14,4 +14,6 @@ export default abstract class HatBlockBase extends BlockBase implements IStackab
     }
 
     abstract height(): number;
+
+    next: (IStackableBlock & BlockBase) | undefined;
 }
