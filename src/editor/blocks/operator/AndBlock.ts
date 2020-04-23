@@ -13,4 +13,9 @@ export default class AndBlock extends OperatorBlock
         this.add_child(new TextBlock("and"))
         this.add_child(new BooleanGhostBlock());
     }
+
+    public draggable(): boolean
+    {
+        return true;
+    }
 }

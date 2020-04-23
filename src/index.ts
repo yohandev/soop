@@ -1,32 +1,17 @@
 import { view, setup, Path, Point } from "paper"
 import "../res/styles.css";
-import Script from "./Script";
-import DefineBlock from "./blocks/DefineBlock";
-import MultiplicationBlock from "./blocks/reporter/MultiplicationBlock";
-import AdditionBlock from "./blocks/reporter/AdditionBlock";
 import SetXBlock from "./editor/blocks/motion/SetXBlock";
+import SetYBlock from "./editor/blocks/motion/SetYBlock";
+import { Cursor } from "./editor/Cursor";
 
 function init()
 {
-	const canvas = document.getElementById("editor") as HTMLCanvasElement;
-
-	canvas.classList.add('editor')
-
-	setup($("#editor")[0] as HTMLCanvasElement);
+	setup($("#editor")[0] as HTMLCanvasElement); // init paperjs
 	
-	// const blocks: BlockBase[] = [new DefineBlock(), new SetXBlock(), new MultiplicationBlock()];
+	Cursor.init(); // init cursor
 
-	// // define set x to tester
-	// (blocks[0].fields[1] as BlockBlockField).value = new SetXBlock();
-
-	// // arithmetic chain
-	// (blocks[2].fields[0] as BlockReporterField).value = new AdditionBlock();
-	// (blocks[1].fields[1] as BlockReporterField).value = blocks[2] as MultiplicationBlock;
-	// blocks.pop();
-
-	// blocks.forEach(b => b.render());
 	const a = new SetXBlock();
-	const b = a.next(new SetXBlock());
+	const b = a.next(new SetYBlock());
 	const c = b.next(new SetXBlock());
 
 	a.render();
@@ -53,16 +38,10 @@ function init()
 	// 	}
 	// }
 
-	//myScript.render();
 	view.draw();
 
-	view.onFrame = render;
+	//view.onFrame = render;
 
-}
-
-function render()
-{
-	//console.log("one: " + one.graphics.position.y + "two: " + two.graphics.position.y);
 }
 
 window.onload = init;

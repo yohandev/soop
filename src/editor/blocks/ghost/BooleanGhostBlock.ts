@@ -3,9 +3,9 @@ import TextBlock from "../abstract/TextBlock";
 
 export default class BooleanGhostBlock extends BooleanBlock
 {
-    protected draw(): void
+    protected draw(drag: boolean): void
     {
-        super.draw();
+        super.draw(drag);
 
         this.add_child(new TextBlock("         "));
     }
@@ -18,5 +18,10 @@ export default class BooleanGhostBlock extends BooleanBlock
     public stroke(): string
     {
         return this.parent.fill();
+    }
+
+    public draggable(): boolean
+    {
+        return false;
     }
 }

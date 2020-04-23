@@ -1,14 +1,15 @@
 import { Path } from "paper";
 import StackBlock from "../abstract/StackBlock";
+import { Cursor } from "../../Cursor";
 
 const SVG_DATA = `M.5,4.5a4,4,0,0,1,4-4h8a5.2,5.2,0,0,1,4,2l4,4a5.2,5.2,0,0,0,4,2h12a5.2,5.2,0,0,0,4-2l4-4a5.2,5.2,0,0,1,4-2h131a4,4,0,0,1,4,4v40a4,4,0,0,1-4,4H48.5a5.2,5.2,0,0,0-4,2l-4,4a5.2,5.2,0,0,1-4,2h-12a5.2,5.2,0,0,1-4-2l-4-4a5.2,5.2,0,0,0-4-2h-8a4,4,0,0,1-4-4Z`;
 const EXPAND_INDICES = [10, 11, 12, 13];
 
-export default class MotionBlock extends StackBlock
+export default abstract class MotionBlock extends StackBlock
 {
     protected path: Path;
 
-    protected draw(): void
+    protected draw(drag: boolean): void
     {
         if (this.path)
         {
@@ -19,6 +20,11 @@ export default class MotionBlock extends StackBlock
 
         this.path.fillColor = this.fill();
         this.path.strokeColor = this.stroke();
+
+        if (drag)
+        {
+            this.path.onMouseDrag = e => Cursor.drag(this, e);
+        }
     }
 
     public width(): number

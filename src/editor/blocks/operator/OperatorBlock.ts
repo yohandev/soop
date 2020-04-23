@@ -11,5 +11,4 @@ export default abstract class OperatorBlock extends BooleanBlock
     {
         return '#389438';
     }
-    
 }

@@ -13,7 +13,7 @@ export default class TextBlock extends Block
         this.content = content;
     }
 
-    protected draw(): void
+    protected draw(drag: boolean): void
     {
         if (this.graphics)
         {
@@ -59,5 +59,10 @@ export default class TextBlock extends Block
     public fill(): string
     {
         return this.parent.fill();
+    }
+
+    public draggable(): boolean
+    {
+        return false;
     }
 }
