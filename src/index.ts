@@ -5,6 +5,10 @@ import SetXBlock from "./blocks/motion/SetXBlock";
 import EqualBlock from "./blocks/boolean/EqualBlock";
 import BlockBooleanField from "./blocks/fields/BlockBooleanField";
 import BlockBlockField from "./blocks/fields/BlockBlockField";
+import MultiplicationBlock from "./blocks/reporter/MultiplicationBlock";
+import BlockReporterField from "./blocks/fields/BlockReporterField";
+import AdditionBlock from "./blocks/reporter/AdditionBlock";
+import { BlockBase } from "./blocks/BlockBase";
 
 function init()
 {
@@ -14,15 +18,15 @@ function init()
 
 	setup($("#editor")[0] as HTMLCanvasElement);
 	
-	const blocks = [new DefineBlock(), new SetXBlock()];
-
-	// equalllllssss chain
-	const eq = (blocks[1].fields[1] as BlockBooleanField).value = new EqualBlock();
-	const eq2 = (eq.fields[0] as BlockBooleanField).value = new EqualBlock();
-	const eq3 = (eq2.fields[0] as BlockBooleanField).value = new EqualBlock();
+	const blocks: BlockBase[] = [new DefineBlock(), new SetXBlock(), new MultiplicationBlock()];
 
 	// define set x to tester
 	(blocks[0].fields[1] as BlockBlockField).value = new SetXBlock();
+
+	// arithmetic chain
+	(blocks[2].fields[0] as BlockReporterField).value = new AdditionBlock();
+	(blocks[1].fields[1] as BlockReporterField).value = blocks[2] as MultiplicationBlock;
+	blocks.pop();
 
 	blocks.forEach(b => b.render());
 	
