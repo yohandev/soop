@@ -1,7 +1,7 @@
 import MotionBlock from "./MotionBlock";
 import TextBlock from "../abstract/TextBlock";
 import BooleanGhostBlock from "../ghost/BooleanGhostBlock";
-import AndBlock from "../operator/AndBlock";
+import OrBlock from "../operator/OrBlock";
 
 export default class SetXBlock extends MotionBlock
 {
@@ -10,7 +10,7 @@ export default class SetXBlock extends MotionBlock
         super();
 
         this.add_child(new TextBlock("set x to"));
-        this.add_child(new AndBlock());
+        this.add_child(new BooleanGhostBlock());
     }
 
     public draggable(): boolean

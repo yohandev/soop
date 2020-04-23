@@ -3,7 +3,7 @@ const PADDING: number = 10;
 export default abstract class Block
 {
     protected parent: Block | undefined;
-    protected children: Block[];
+    public children: Block[];
 
     constructor()
     {
@@ -11,11 +11,18 @@ export default abstract class Block
         this.children = [];
     }
 
-    public add_child(child: Block)
+    public add_child(child: Block, index?: number)
     {
         child.parent = this;
 
-        this.children.push(child);
+        if (index)
+        {
+            this.children.splice(index, 0, child);
+        }
+        else
+        {
+            this.children.push(child);
+        }
     }
 
     private top(): Block
@@ -32,6 +39,7 @@ export default abstract class Block
         // 1. draw child in full size
         // 2. accomodate for child size
 
+        this.undraw();
         this.draw(this.draggable());
 
         let w = PADDING;
@@ -58,12 +66,14 @@ export default abstract class Block
 
     protected abstract translate(x: number, y: number): void;
     protected abstract draw(drag: boolean): void;
+    protected abstract undraw(): void;
 
     public abstract width(): number;
     public abstract height(): number;
 
     protected abstract expand(w: number, h: number): void;
 
+    public abstract separate(): boolean;
     protected abstract draggable(): boolean;
 
     public abstract fill(): string;

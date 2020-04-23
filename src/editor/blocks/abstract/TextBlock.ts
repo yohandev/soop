@@ -15,11 +15,6 @@ export default class TextBlock extends Block
 
     protected draw(drag: boolean): void
     {
-        if (this.graphics)
-        {
-            this.graphics.remove();
-        }
-
         this.graphics = new PointText
         ({
             point: [0, 15],
@@ -28,6 +23,14 @@ export default class TextBlock extends Block
             fillColor: this.stroke(),
             fontFamily: 'Roboto'
         });
+    }
+
+    protected undraw(): void
+    {
+        if (this.graphics)
+        {
+            this.graphics.remove();
+        }
     }
 
     public width(): number
@@ -43,6 +46,11 @@ export default class TextBlock extends Block
     protected expand(w: number, h: number): void
     {
         // text does not expand
+    }
+
+    public separate(): boolean
+    {
+        return false; // text doesn't separate
     }
 
     public translate(x: number, y: number): void

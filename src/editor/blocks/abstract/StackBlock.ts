@@ -29,6 +29,19 @@ export default abstract class StackBlock extends Block
         }
     }
 
+    public separate(): boolean
+    {
+        if (this.m_prev)
+        {
+            this.m_prev.m_next = undefined;
+            this.m_prev = undefined;
+
+            return true;
+        }
+
+        return false;
+    }
+
     public next(set?: StackBlock): StackBlock | undefined
     {
         if (set)

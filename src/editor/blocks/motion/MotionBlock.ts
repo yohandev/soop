@@ -11,11 +11,6 @@ export default abstract class MotionBlock extends StackBlock
 
     protected draw(drag: boolean): void
     {
-        if (this.path)
-        {
-            this.path.remove();
-        }
-
         this.path = new Path(SVG_DATA);
 
         this.path.fillColor = this.fill();
@@ -24,6 +19,14 @@ export default abstract class MotionBlock extends StackBlock
         if (drag)
         {
             this.path.onMouseDrag = e => Cursor.drag(this, e);
+        }
+    }
+
+    protected undraw(): void
+    {
+        if (this.path)
+        {
+            this.path.remove();
         }
     }
 

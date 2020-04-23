@@ -1,11 +1,12 @@
 import BooleanBlock from "../abstract/BooleanBlock";
 import TextBlock from "../abstract/TextBlock";
+import IGhostBlock from "./IGhostBlock";
 
-export default class BooleanGhostBlock extends BooleanBlock
+export default class BooleanGhostBlock extends BooleanBlock implements IGhostBlock<BooleanBlock>
 {
-    protected draw(drag: boolean): void
+    constructor()
     {
-        super.draw(drag);
+        super();
 
         this.add_child(new TextBlock("         "));
     }

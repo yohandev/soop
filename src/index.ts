@@ -3,12 +3,14 @@ import "../res/styles.css";
 import SetXBlock from "./editor/blocks/motion/SetXBlock";
 import SetYBlock from "./editor/blocks/motion/SetYBlock";
 import { Cursor } from "./editor/Cursor";
+import { BlockEnvironment } from "./editor/BlockEnvironment";
 
 function init()
 {
 	setup($("#editor")[0] as HTMLCanvasElement); // init paperjs
 	
 	Cursor.init(); // init cursor
+	BlockEnvironment.init();
 
 	const a = new SetXBlock();
 	const b = a.next(new SetYBlock());

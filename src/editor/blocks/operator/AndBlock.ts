@@ -9,7 +9,7 @@ export default class AndBlock extends OperatorBlock
     {
         super();
 
-        this.add_child(new OrBlock());
+        this.add_child(new BooleanGhostBlock());
         this.add_child(new TextBlock("and"))
         this.add_child(new BooleanGhostBlock());
     }
