@@ -6,6 +6,7 @@ import { Cursor } from "./editor/Cursor";
 import { BlockEnvironment } from "./editor/BlockEnvironment";
 import OrBlock from "./editor/blocks/operator/OrBlock";
 import MultiplyBlock from "./editor/blocks/operator/MultiplyBlock";
+import DefineBlock from "./editor/blocks/object/DefineBlock";
 
 function init()
 {
@@ -14,6 +15,7 @@ function init()
 	Cursor.init(); // init cursor
 	BlockEnvironment.init();
 
+	BlockEnvironment.add(new DefineBlock());
 	BlockEnvironment.add(new SetXBlock())
 	BlockEnvironment.add(new SetYBlock())
 	BlockEnvironment.add(new SetXBlock())
