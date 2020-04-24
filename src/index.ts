@@ -5,6 +5,7 @@ import SetYBlock from "./editor/blocks/motion/SetYBlock";
 import { Cursor } from "./editor/Cursor";
 import { BlockEnvironment } from "./editor/BlockEnvironment";
 import OrBlock from "./editor/blocks/operator/OrBlock";
+import MultiplyBlock from "./editor/blocks/operator/MultiplyBlock";
 
 function init()
 {
@@ -53,5 +54,9 @@ window.onkeypress = (e: KeyboardEvent) =>
 	if (e.key == ' ')
 	{
 		BlockEnvironment.add(new OrBlock());
+	}
+	if (e.key == 'a')
+	{
+		BlockEnvironment.add(new MultiplyBlock());
 	}
 }

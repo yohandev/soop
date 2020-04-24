@@ -2,11 +2,9 @@ import BooleanBlock from "../abstract/BooleanBlock";
 import TextBlock from "../abstract/TextBlock";
 import GhostBlock from "./GhostBlock";
 import { Path, Item } from "paper";
+import ReporterBlock, { SVG_DATA, EXPAND_INDICES } from "../abstract/ReporterBlock";
 
-const SVG_DATA = `M20.71.5h105l20,20h0l-20,20h-105l-20-20h0Z`;
-const EXPAND_INDICES = [1, 2, 3, 4];
-
-export default class BooleanGhostBlock extends GhostBlock<BooleanBlock>
+export default class ReporterGhostBlock extends GhostBlock<ReporterBlock>
 {
     private path: Path;
 
@@ -55,7 +53,7 @@ export default class BooleanGhostBlock extends GhostBlock<BooleanBlock>
         return this.parent.fill();
     }
 
-    public ghost_join(block: BooleanBlock): void
+    public ghost_join(block: ReporterBlock): void
     {
         if (!(this.children[0] instanceof TextBlock))
         {
@@ -68,9 +66,9 @@ export default class BooleanGhostBlock extends GhostBlock<BooleanBlock>
         this.top().render(); 
     }
 
-    public ghost_separate(block: BooleanBlock): void
+    public ghost_separate(block: ReporterBlock): void
     {
-        if (!(this.children[0] instanceof BooleanBlock))
+        if (!(this.children[0] instanceof ReporterBlock))
         {
             return;
         }

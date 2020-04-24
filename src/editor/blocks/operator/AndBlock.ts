@@ -1,9 +1,9 @@
-import OperatorBlock from "./OperatorBlock";
 import BooleanGhostBlock from "../ghost/BooleanGhostBlock";
 import TextBlock from "../abstract/TextBlock";
 import OrBlock from "./OrBlock";
+import { OperatorBooleanBlock } from "./OperatorBlock";
 
-export default class AndBlock extends OperatorBlock
+export default class AndBlock extends OperatorBooleanBlock
 {
     constructor()
     {

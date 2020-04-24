@@ -2,11 +2,12 @@ import Block from "../Block";
 import { Path, Item } from "paper";
 import BooleanGhostBlock from "../ghost/BooleanGhostBlock";
 import GhostBlock from "../ghost/GhostBlock";
+import ReporterGhostBlock from "../ghost/ReporterGhostBlock";
 
-const SVG_DATA = `M20.71.5h105l20,20h0l-20,20h-105l-20-20h0Z`;
-const EXPAND_INDICES = [1, 2, 3, 4];
+export const SVG_DATA = `M20.5.5h45a20,20,0,0,1,20,20h0a20,20,0,0,1-20,20h-45a20,20,0,0,1-20-20h0A20,20,0,0,1,20.5.5Z`;
+export const EXPAND_INDICES = [1, 2, 3, 4];
 
-export default abstract class BooleanBlock extends Block
+export default abstract class ReporterBlock extends Block
 {
     protected path: Path;
 
@@ -45,7 +46,7 @@ export default abstract class BooleanBlock extends Block
             return false;
         }
 
-        (this.parent as GhostBlock<BooleanBlock>).ghost_separate(this);
+        (this.parent as GhostBlock<ReporterBlock>).ghost_separate(this);
         this.parent = undefined;
 
         return true;
@@ -57,11 +58,11 @@ export default abstract class BooleanBlock extends Block
         {
             return false;
         }
-        (to as GhostBlock<BooleanBlock>).ghost_join(this);
+        (to as GhostBlock<ReporterBlock>).ghost_join(this);
     }
 
     public can_join(to: Block): boolean
     {
-        return to instanceof BooleanGhostBlock; // TODO || ReporterGhostBlock
+        return to instanceof ReporterGhostBlock; // TODO || ReporterGhostBlock
     }
 }

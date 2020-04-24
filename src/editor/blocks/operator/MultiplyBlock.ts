@@ -1,14 +1,15 @@
-import MotionBlock from "./MotionBlock";
+import { OperatorReporterBlock } from "./OperatorBlock";
 import TextBlock from "../abstract/TextBlock";
 import ReporterGhostBlock from "../ghost/ReporterGhostBlock";
 
-export default class SetXBlock extends MotionBlock
+export default class MultiplyBlock extends OperatorReporterBlock
 {
     constructor()
     {
         super();
 
-        this.add_child(new TextBlock("set x to"));
+        this.add_child(new ReporterGhostBlock());
+        this.add_child(new TextBlock("*"))
         this.add_child(new ReporterGhostBlock());
     }
 
