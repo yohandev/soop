@@ -36,6 +36,7 @@ export default class BooleanGhostBlock extends BooleanBlock implements IGhostBlo
         this.children = [];
 
         this.add_child(block);
+        this.top().render(); 
     }
 
     public ghost_remove(block: BooleanBlock): void
