@@ -1,7 +1,6 @@
 import OperatorBlock from "./OperatorBlock";
 import BooleanGhostBlock from "../ghost/BooleanGhostBlock";
 import TextBlock from "../abstract/TextBlock";
-import OrBlock from "./OrBlock";
 
 export default class AndBlock extends OperatorBlock
 {

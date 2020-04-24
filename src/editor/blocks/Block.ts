@@ -1,5 +1,6 @@
 import { Item, Point } from "paper";
 import { Cursor } from "../Cursor";
+import BlockShape from "./abstract/BlockShapes";
 
 const PADDING: number = 10;
 
@@ -8,24 +9,20 @@ export default abstract class Block
     protected parent: Block | undefined;
     protected children: Block[];
 
-    constructor()
+    protected shape: BlockShape;
+
+    constructor(shape: BlockShape)
     {
         this.parent = undefined;
         this.children = [];
+        this.shape = shape;
     }
 
-    public add_child(child: Block, index?: number)
+    public add_child(child: Block)
     {
         child.parent = this;
 
-        if (index)
-        {
-            this.children.splice(index, 0, child);
-        }
-        else
-        {
-            this.children.push(child);
-        }
+        this.children.push(child);
     }
 
     protected top(): Block
@@ -41,22 +38,22 @@ export default abstract class Block
     {
         let pos = new Point(0, 0);
 
-        if (this.top().graphics())
+        if (this.top().shape.path())
         {
-            pos = this.top().graphics().bounds.topLeft;
+            pos = this.top().shape.path().bounds.topLeft;
         }
 
-        if (this.graphics())
+        if (this.shape.path())
         {
-            this.graphics().remove();
+            this.shape.path().remove();
         }
 
-        this.draw();
-        this.graphics().translate(pos);
+        this.shape.draw();
+        this.shape.path().translate(pos);
 
         if (this.draggable())
         {
-            this.graphics().onMouseDrag = e => Cursor.drag(this, e);
+            this.shape.path().onMouseDrag = e => Cursor.drag(this, e);
         }
 
         let w = PADDING;
@@ -68,13 +65,13 @@ export default abstract class Block
             c.translate(w, 0); // 2. adjust size position and padding
             
             // @ts-ignore
-            c.graphics().translate([0, this.top().height() / 2 - c.height() / 2]); // 2.5. correct height
+            c.graphics().translate([0, this.top().shape.height() / 2 - c.shape.height() / 2]); // 2.5. correct height
 
-            w += c.width() + PADDING;
-            h = Math.max(h, c.height());
+            w += c.shape.width() + PADDING;
+            h = Math.max(h, c.shape.height());
         });
 
-        this.expand(w - this.width(), h - this.height() + PADDING); // 3. accomodate for child size
+        this.shape.grow(w - this.shape.width(), h - this.shape.height() + PADDING); // 3. accomodate for child size
     }
 
     public translate(x: number, y: number): void
@@ -91,14 +88,6 @@ export default abstract class Block
 
         this.children.forEach(i => i.iterate(func));
     }
-
-    protected abstract draw(): void;
-    public abstract graphics(): Item;
-
-    public abstract width(): number;
-    public abstract height(): number;
-
-    protected abstract expand(w: number, h: number): void;
 
     public abstract separate(): boolean;
     public abstract can_join(to: Block): boolean;

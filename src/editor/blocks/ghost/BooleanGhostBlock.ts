@@ -1,6 +1,6 @@
 import BooleanBlock from "../abstract/BooleanBlock";
 import TextBlock from "../abstract/TextBlock";
-import IGhostBlock from "./GhostBlock";
+import IGhostBlock from "./IGhostBlock";
 
 export default class BooleanGhostBlock extends BooleanBlock implements IGhostBlock<BooleanBlock>
 {
