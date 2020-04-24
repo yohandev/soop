@@ -1,6 +1,7 @@
 import Block from "../Block";
 import { Path, Item } from "paper";
 import BooleanGhostBlock from "../ghost/BooleanGhostBlock";
+import IGhostBlock from "../ghost/GhostBlock";
 
 const SVG_DATA = `M20.71.5h105l20,20h0l-20,20h-105l-20-20h0Z`;
 const EXPAND_INDICES = [1, 2, 3, 4];
@@ -44,6 +45,7 @@ export default abstract class BooleanBlock extends Block
             return false;
         }
 
+        (this.parent as any as IGhostBlock<BooleanBlock>).ghost_remove(this);
         this.parent = undefined;
 
         return true;
@@ -55,11 +57,11 @@ export default abstract class BooleanBlock extends Block
         {
             return false;
         }
-        to.add_child(this);
+        (to as any as IGhostBlock<BooleanBlock>).ghost_join(this);
     }
 
     public can_join(to: Block): boolean
     {
-        return to instanceof BooleanGhostBlock;
+        return to instanceof BooleanGhostBlock; // TODO || ReporterGhostBlock
     }
 }

@@ -6,7 +6,7 @@ const PADDING: number = 10;
 export default abstract class Block
 {
     protected parent: Block | undefined;
-    public children: Block[];
+    protected children: Block[];
 
     constructor()
     {
