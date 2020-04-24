@@ -1,9 +1,8 @@
 import Block from "./blocks/Block";
-import { Point } from "paper";
 
 export namespace BlockEnvironment
 {
-    let blocks: Block[]; // floating blocks only, not stacked or nested
+    export let blocks: Block[]; // floating blocks only, not stacked or nested
 
     export function init()
     {

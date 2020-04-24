@@ -7,6 +7,7 @@ import { BlockEnvironment } from "./editor/BlockEnvironment";
 import OrBlock from "./editor/blocks/operator/OrBlock";
 import MultiplyBlock from "./editor/blocks/operator/MultiplyBlock";
 import DefineBlock from "./editor/blocks/object/DefineBlock";
+import Transpiler from "./vm/Transpiler";
 
 function init()
 {
@@ -60,5 +61,9 @@ window.onkeypress = (e: KeyboardEvent) =>
 	if (e.key == 'a')
 	{
 		BlockEnvironment.add(new MultiplyBlock());
+	}
+	if (e.key == 'r')
+	{
+		Transpiler.Class("myClass");
 	}
 }

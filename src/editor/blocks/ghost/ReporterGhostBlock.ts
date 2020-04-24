@@ -3,6 +3,7 @@ import TextBlock from "../abstract/TextBlock";
 import GhostBlock from "./GhostBlock";
 import { Path, Item } from "paper";
 import ReporterBlock, { SVG_DATA, EXPAND_INDICES } from "../abstract/ReporterBlock";
+import Transpiler from "../../../vm/Transpiler";
 
 export default class ReporterGhostBlock extends GhostBlock<ReporterBlock>
 {
@@ -75,5 +76,17 @@ export default class ReporterGhostBlock extends GhostBlock<ReporterBlock>
         this.children = [];
         this.add_child(new TextBlock("         "));
         this.top().render(); 
+    }
+
+    public transpile(t: Transpiler): void
+    {
+        if (this.children[0] instanceof TextBlock)
+        {
+            t.write('undefined');
+        }
+        else
+        {
+            this.children[0].transpile(t);
+        }        
     }
 }

@@ -1,5 +1,6 @@
 import Block from "../Block";
 import { PointText, Item } from "paper";
+import Transpiler from "../../../vm/Transpiler";
 
 export default class TextBlock extends Block
 {
@@ -73,5 +74,10 @@ export default class TextBlock extends Block
     public draggable(): boolean
     {
         return false;
+    }
+
+    public transpile(t: Transpiler): void
+    {
+        console.warn("somehow got to transpile textblock");       
     }
 }

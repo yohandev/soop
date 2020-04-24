@@ -1,5 +1,6 @@
 import { Item, Point } from "paper";
 import { Cursor } from "../Cursor";
+import Transpiler from "../../vm/Transpiler";
 
 const PADDING: number = 10;
 
@@ -108,4 +109,6 @@ export default abstract class Block
 
     public abstract fill(): string;
     public abstract stroke(): string;
+
+    public abstract transpile(t: Transpiler): void;
 }
