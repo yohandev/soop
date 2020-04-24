@@ -13,6 +13,7 @@ export namespace BlockEnvironment
     export function add(block: Block)
     {
         blocks.push(block);
+        block.render();
     }
 
     export function remove(block: Block)
@@ -31,6 +32,11 @@ export namespace BlockEnvironment
 
         blocks.forEach(b => // iterate each loose block
         {
+            if (a === b) // don't look for blocks already underneath
+            {
+                return;
+            }
+
             b.iterate(b2 =>
             {
                 if (found !== undefined) // iterates from top to bottom, top block priority

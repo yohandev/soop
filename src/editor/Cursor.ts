@@ -30,6 +30,11 @@ export namespace Cursor
 
     function stop_drag(e: paper.MouseEvent)
     {
+        if (dragging === undefined)
+        {
+            return;
+        }
+        
         const dist = e.point.getDistance(start);
 
         if (dist > 30)

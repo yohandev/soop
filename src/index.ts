@@ -4,6 +4,7 @@ import SetXBlock from "./editor/blocks/motion/SetXBlock";
 import SetYBlock from "./editor/blocks/motion/SetYBlock";
 import { Cursor } from "./editor/Cursor";
 import { BlockEnvironment } from "./editor/BlockEnvironment";
+import OrBlock from "./editor/blocks/operator/OrBlock";
 
 function init()
 {
@@ -16,7 +17,7 @@ function init()
 	BlockEnvironment.add(new SetYBlock())
 	BlockEnvironment.add(new SetXBlock())
 
-	BlockEnvironment.render();
+	//BlockEnvironment.render();
 	// const myScript = new Script();
 
 	// myScript.push(new DefineBlock(new SetXBlock()));
@@ -47,3 +48,10 @@ function init()
 }
 
 window.onload = init;
+window.onkeypress = (e: KeyboardEvent) =>
+{
+	if (e.key == ' ')
+	{
+		BlockEnvironment.add(new OrBlock());
+	}
+}
