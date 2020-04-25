@@ -6,6 +6,13 @@ export default abstract class NestedBlock extends Block
 {
     private m_container: InputProp<this>;
 
+    public draw(): void
+    {
+        super.draw();
+
+        this.shape.path.onMouseDown = e => console.log(this.m_container);
+    }
+
     public disconnect(): boolean
     {
         if (!this.m_container)
@@ -29,7 +36,8 @@ export default abstract class NestedBlock extends Block
             return false;
         }
 
-        (b as InputProp<this>).value =  this; // todo check reporter or boolean
+        (b as InputProp<this>).value =  this; // todo check reporter or boolean 
+        ((b as InputProp<this>).parent as Block).top.draw();
     }
 
     public set container(c: InputProp<this>)
@@ -39,6 +47,10 @@ export default abstract class NestedBlock extends Block
 
     public get top(): Block
     {
+        if (!this.m_container)
+        {
+            return this;
+        }
         return (this.m_container.parent as Block).top;
     }
 }

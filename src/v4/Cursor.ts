@@ -55,16 +55,15 @@ export default class Cursor
 
         console.log(this.distance(e));
 
-        if (this.active.top !== this.active && this.distance(e) < this.threshold) // 'snap' back
+        if (Workspace.active.connect(this.active)) // connect
+        {
+            console.log("connected");
+        }
+        else if (this.active.top !== this.active && this.distance(e) < this.threshold) // 'snap' back
         {
             console.log("snap");
 
             this.active.top.draw();
-        }
-
-        if (Workspace.active.connect(this.active)) // connect
-        {
-            console.log("connected");
         }
 
         this.active = undefined;

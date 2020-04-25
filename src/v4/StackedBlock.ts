@@ -1,14 +1,16 @@
 import Block from "./Block";
 import Prop from "./Prop";
+import IVisitable from "./IVisitable";
 
 export default abstract class StackedBlock extends Block
 {
-    private m_next: StackedBlock;
-    private m_prev: StackedBlock;
+    private m_next: StackedBlock | undefined;
+    private m_prev: StackedBlock | undefined;
 
     public draw(): void
     {
         super.draw();
+        this.shape.path.onMouseDown = e => console.log(`prev: ${this.m_prev}, next: ${this.m_next}`);
 
         if (this.m_next)
         {
@@ -26,16 +28,22 @@ export default abstract class StackedBlock extends Block
         return this.m_next;
     }
 
-    public get top(): StackedBlock
+    public get top(): StackedBlock | undefined
     {
-        if (!this.m_prev)
+        if (this.m_prev == undefined)
         {
             return this;
+        }
+        if (this.m_prev === this)
+        {
+            console.warn("somehow connected to itself");
+            
+            return this.m_prev = undefined;
         }
         return this.m_prev.top;
     }
 
-    private get bottom(): StackedBlock
+    private get bottom(): StackedBlock | undefined
     {
         if (!this.m_next)
         {
@@ -50,19 +58,30 @@ export default abstract class StackedBlock extends Block
         {
             return false; // only connects to stack
         }
+
+        if (this.m_prev)
+        {
+            this.disconnect();
+        }
         
         if (b.m_next) // place block in between
         {
-            const bo = this.bottom;
+            const n = b.m_next;
 
-            bo.m_next = b.m_next;
-            b.m_next.m_prev = bo;
-        } 
+            n.disconnect();
+            n.connect(this.bottom);
+            // const bo = this.bottom;
+
+            // bo.m_next = b.m_next;
+            // b.m_next.m_prev = bo;
+        }
 
         b.m_next = this; // this -> b
         this.m_prev = b; // b <- this
 
-        b.top.draw();
+        console.log("starting draw");
+        this.top.draw();
+        console.log("done draw");
 
         return true;
     }
@@ -81,5 +100,15 @@ export default abstract class StackedBlock extends Block
         this.draw(); // redraw this
 
         return true;
+    }
+
+    public visit(func: (v: IVisitable) => void): void
+    {
+        super.visit(func);
+
+        if (this.m_next)
+        {
+            this.m_next.visit(func);
+        }
     }
 }

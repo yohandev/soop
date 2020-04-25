@@ -2,10 +2,12 @@ import IBlock from "./IBlock";
 import Prop from "./Prop";
 import Shape from "./Shape";
 import { Colour } from "./Colour";
-import { Group, Point } from "paper";
+import { Group, Rectangle } from "paper";
 import Cursor from "./Cursor";
+import IVisitable from "./IVisitable";
+import Drawable from "./Drawable";
 
-export default abstract class Block implements IBlock
+export default abstract class Block implements IBlock, IVisitable
 {
     public static readonly h_padding: number = 10;
     public static readonly v_padding: number = 10;
@@ -47,6 +49,7 @@ export default abstract class Block implements IBlock
         let offset = Block.h_padding;
         for (const prop of this.props)
         {
+            prop.erase();
             prop.draw(); // draw prop
             this.m_group.addChild(prop.path); // group prop
 
@@ -84,6 +87,18 @@ export default abstract class Block implements IBlock
     public get group(): Group
     {
         return this.m_group;
+    }
+
+    public visit(func: (v: IVisitable) => void): void
+    {
+        func(this);
+
+        this.props.forEach(p => p.visit(func));
+    }
+
+    public intersects(b: Rectangle): boolean
+    {
+        return this.shape.path.bounds.intersects(b);
     }
 
     public abstract connect(b: Block | Prop): boolean; // join a new parent

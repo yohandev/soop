@@ -1,6 +1,7 @@
 import Prop from "./Prop";
-import { PointText } from "paper";
+import { PointText, Rectangle } from "paper";
 import IBlock from "./IBlock";
+import IVisitable from "./IVisitable";
 
 export default class TextProp extends Prop
 {
@@ -49,5 +50,15 @@ export default class TextProp extends Prop
     public set height(n: number)
     {
         // skipping impl ;; text doesn't need to scale
+    }
+
+    public visit(func: (v: IVisitable) => void): void
+    {
+        return;
+    }
+
+    public intersects(b: Rectangle): boolean
+    {
+        return false;
     }
 }

@@ -1,5 +1,7 @@
 import Block from "./Block";
 import Cursor from "./Cursor";
+import InputProp from "./InputProp";
+import Prop from "./Prop";
 
 export default class Workspace
 {
@@ -30,29 +32,36 @@ export default class Workspace
 
     public connect(block: Block): boolean // connects to nearest
     {
-        const bb1 = block.shape.path.bounds;
+        const bounds = block.shape.path.bounds.clone().expand(Cursor.threshold);
+        let found = false;
 
-        for (const b of this.blocks)
+        for (const blo of this.blocks)
         {
-            if (b === block) // don't connect to yourself
+            if (blo === block) // don't connect to yourself
             {
                 continue;
             }
 
-            const bb2 = b.shape.path.bounds.clone().expand(Cursor.threshold);
-            
-            if (bb1.intersects(bb2)) // interesect within threshold
-            {
-                if (block.connect(b))
+            blo.visit(b =>
+            { 
+                if (found)
                 {
-                    this.blocks.splice(this.blocks.indexOf(block), 1) // rm from loose blocks
+                    return;
+                }  
 
-                    return true; // connected ;; done
+                if (b.intersects(bounds)) // interesect within threshold
+                {
+                    if (block.connect(b as Block | Prop))
+                    {
+                        this.blocks.splice(this.blocks.indexOf(block), 1) // rm from loose blocks
+
+                        found = true; // connected ;; done
+                    }
                 }
-            }  
+            });
         }
 
-        return false;
+        return found;
     }
 
     public load(): void

@@ -2,6 +2,8 @@ import Prop from "./Prop";
 import NestedBlock from "./NestedBlock";
 import Shape from "./Shape";
 import { Colour } from "./Colour";
+import IVisitable from "./IVisitable";
+import { Rectangle } from "paper";
 
 export default abstract class InputProp<T extends NestedBlock> extends Prop
 {
@@ -25,15 +27,15 @@ export default abstract class InputProp<T extends NestedBlock> extends Prop
         }
     }
 
-    // public erase(): void
-    // {
-    //     super.erase();
+    public erase(): void
+    {
+        super.erase();
 
-    //     if (this.m_empty)
-    //     {
-    //         this.m_empty.erase();
-    //     }
-    // }
+        if (this.m_empty)
+        {
+            this.m_empty.erase();
+        }
+    }
 
     public get path(): paper.Item
     {
@@ -104,7 +106,7 @@ export default abstract class InputProp<T extends NestedBlock> extends Prop
         return this.m_value;
     }
 
-    public set value(a: T)
+    public set value(a: T | undefined)
     {
         this.m_value = a;
 
@@ -112,5 +114,22 @@ export default abstract class InputProp<T extends NestedBlock> extends Prop
         {
             this.m_value.container = this;
         }
+    }
+
+    public visit(func: (v: IVisitable) => void): void
+    {
+        if (this.m_value)
+        {
+            this.m_value.visit(func);
+        }
+        else
+        {
+            func(this);
+        }
+    }
+
+    public intersects(b: Rectangle): boolean
+    {
+        return this.path.bounds.intersects(b);
     }
 }
