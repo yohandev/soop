@@ -3,7 +3,7 @@ import { Point, MouseEvent } from "paper";
 
 export default class Cursor
 {
-    public static readonly threshold = 0;
+    public static readonly threshold = 30;
 
     private static active: Block;
     private static start: Point;
@@ -11,7 +11,6 @@ export default class Cursor
     public static init()
     {
         paper.project.view.onMouseUp = e => Cursor.stop(e); // register
-        //paper.project.view.onFrame = e => console.log(this.active);
     }
 
     public static drag(target: Block, e: MouseEvent): void
@@ -44,7 +43,10 @@ export default class Cursor
             return; // no drag
         }
 
-        console.log(`dragged ${e.point.getDistance(this.start)}pts`);
+        if (this.distance(e) < this.threshold)
+        {
+            this.active.top.draw(); // re-render to 'snap' back
+        }
 
         this.active = undefined;
     }
