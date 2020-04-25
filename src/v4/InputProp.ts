@@ -1,6 +1,7 @@
 import Prop from "./Prop";
 import NestedBlock from "./NestedBlock";
 import Shape from "./Shape";
+import { Colour } from "./Colour";
 
 export default abstract class InputProp<T extends NestedBlock> extends Prop
 {
@@ -15,10 +16,12 @@ export default abstract class InputProp<T extends NestedBlock> extends Prop
         }
         else
         {
-            this.m_empty = this.empty;
+            const e = this.empty;
+
+            this.m_empty = e.shape;
 
             this.m_empty.draw();
-            this.m_empty.colour({ fill: 'white', stroke: this.parent.colour.stroke });
+            this.m_empty.colour(e.colour);
         }
     }
 
@@ -92,5 +95,5 @@ export default abstract class InputProp<T extends NestedBlock> extends Prop
         }
     }
     
-    protected abstract get empty(): Shape;
+    protected abstract get empty(): { shape: Shape, colour: Colour };
 }

@@ -3,6 +3,7 @@ import ReporterBlock from "./ReporterBlock";
 import Shape from "./Shape";
 import Shapes from "./Shapes";
 import IBlock from "./IBlock";
+import { Colour } from "./Colour";
 
 export default class ReporterInputProp extends InputProp<ReporterBlock>
 {
@@ -11,8 +12,8 @@ export default class ReporterInputProp extends InputProp<ReporterBlock>
         super(parent);
     }
 
-    protected get empty(): Shape
+    protected get empty(): { shape: Shape, colour: Colour }
     {
-        return Shapes.REPORTER;
+        return { shape: Shapes.REPORTER, colour: { fill: 'white', stroke: this.parent.colour.stroke } };
     }
 }
