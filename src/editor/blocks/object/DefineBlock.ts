@@ -3,6 +3,7 @@ import { Path, Item } from "paper";
 import TextBlock from "../abstract/TextBlock";
 import SetXBlock from "../motion/SetXBlock";
 import Transpiler from "../../../vm/Transpiler";
+import ReporterGhostBlock from "../ghost/ReporterGhostBlock";
 
 const SVG_DATA: string = `M.5,20.5a20,20,0,0,1,20-20h92a20,20,0,0,1,20,20v52a4,4,0,0,1-4,4h-80a5.2,5.2,0,0,0-4,2l-4,4a5.2,5.2,0,0,1-4,2h-12a5.2,5.2,0,0,1-4-2l-4-4a5.2,5.2,0,0,0-4-2h-8a4,4,0,0,1-4-4Z`;
 const EXPAND_INDICES = [2, 3, 4, 5];
@@ -17,6 +18,8 @@ export default class DefineBlock extends StackBlock
 
         this.add_child(new TextBlock("define"));
         this.add_child(new SetXBlock());
+        this.add_child(new TextBlock("for"))
+        this.add_child(new ReporterGhostBlock());
     }
 
     public cap(): boolean
