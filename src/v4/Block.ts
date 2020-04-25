@@ -3,6 +3,7 @@ import Prop from "./Prop";
 import Shape from "./Shape";
 import { Colour } from "./Colour";
 import { Group } from "paper";
+import Cursor from "./Cursor";
 
 export default abstract class Block implements IBlock
 {
@@ -63,7 +64,7 @@ export default abstract class Block implements IBlock
 
         this.shape.colour(this.colour); // color self
 
-        this.shape.path.onMouseDrag = e => this.group.translate(e.delta);
+        this.shape.path.onMouseDrag = e => Cursor.drag(this, e); // draggable
     }
 
     protected add<T extends Prop>(prop: new(parent: Block, ...args: any[]) => T, ...args: any[]) // add prop

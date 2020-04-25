@@ -1,4 +1,3 @@
-import { view, setup, Path, Point } from "paper"
 import "../res/styles.css";
 import { BlockEnvironment } from "./editor/BlockEnvironment";
 import OrBlock from "./editor/blocks/operator/OrBlock";
@@ -7,10 +6,13 @@ import Transpiler from "./vm/Transpiler";
 import GoToBlock from "./v4/GoToBlock";
 import ReporterInputProp from "./v4/ReporterInputProp";
 import PositionXBlock from "./v4/PositionXBlock";
+import Cursor from "./v4/Cursor";
 
 function init()
 {
-	setup($("#editor")[0] as HTMLCanvasElement); // init paperjs
+	paper.setup($("#editor")[0] as HTMLCanvasElement); // init paperjs
+	
+	Cursor.init();
 	
 	const b = new GoToBlock();
 	
