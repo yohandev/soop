@@ -10,6 +10,5 @@ export default class PositionXBlock extends ReporterBlock
         super(Colours.MOTION);
 
         this.add(TextProp, "x position");
-        this.add(ReporterInputProp);
     }
 }

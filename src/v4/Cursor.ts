@@ -53,13 +53,18 @@ export default class Cursor
             return; // no drag
         }
 
+        console.log(this.distance(e));
+
+        if (this.active.top !== this.active && this.distance(e) < this.threshold) // 'snap' back
+        {
+            console.log("snap");
+
+            this.active.top.draw();
+        }
+
         if (Workspace.active.connect(this.active)) // connect
         {
-
-        }
-        else if (this.distance(e) < this.threshold) // 'snap' back
-        {
-            this.active.top.draw();
+            console.log("connected");
         }
 
         this.active = undefined;
