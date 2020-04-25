@@ -7,7 +7,7 @@ export namespace Colours
     export const EVENTS: Colour = { fill: '', stroke: '' };
     export const CONTROL: Colour = { fill: '', stroke: '' };
     export const SENSING: Colour = { fill: '', stroke: '' };
-    export const OPERATOR: Colour = { fill: '', stroke: '' };
+    export const OPERATOR: Colour = { fill: '#59c059', stroke: '#389438' };
     export const VARIABLES: Colour = { fill: '', stroke: '' };
     export const OBJECT: Colour = { fill: '', stroke: '' };
 }

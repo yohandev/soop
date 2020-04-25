@@ -9,6 +9,7 @@ import PositionXBlock from "./v4/PositionXBlock";
 import Cursor from "./v4/Cursor";
 import { Path, Point } from "paper";
 import Workspace from "./v4/Workspace";
+import EqualsBlock from "./v4/EqualsBlock";
 
 function init()
 {
@@ -16,14 +17,12 @@ function init()
 	
 	Cursor.init();
 	Workspace.active = new Workspace();
-
-	const b = new GoToBlock();
 	
-	(b["props"][2] as ReporterInputProp).value = new PositionXBlock();
-
-	Workspace.active.add(b);
 	Workspace.active.add(new GoToBlock());
 	Workspace.active.add(new GoToBlock());
+	Workspace.active.add(new GoToBlock());
+	Workspace.active.add(new EqualsBlock());
+	Workspace.active.add(new PositionXBlock());
 
 	Workspace.active.load();
 
