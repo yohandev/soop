@@ -2,7 +2,7 @@ import IBlock from "./IBlock";
 import Prop from "./Prop";
 import Shape from "./Shape";
 import { Colour } from "./Colour";
-import { Group } from "paper";
+import { Group, Point } from "paper";
 import Cursor from "./Cursor";
 
 export default abstract class Block implements IBlock
@@ -27,12 +27,18 @@ export default abstract class Block implements IBlock
 
     public draw() // recursively draw
     {
+        let pos = paper.project.view.center; // default pos
+
         if (this.m_group)
         {
+            pos = this.m_group.bounds.topLeft; // previous pos
+
+            this.m_group.onMouseDrag = undefined;
             this.m_group.remove();
         }
         this.m_group = new Group();
 
+        this.shape.erase(); // erase itself(important: clears events)
         this.shape.draw(); // draw self
         this.m_group.addChild(this.shape.path);
 
@@ -62,6 +68,8 @@ export default abstract class Block implements IBlock
         this.shape.width = offset; // width adjust self
         this.shape.height = maxh; // height adjust self
 
+        this.m_group.bounds.topLeft = pos; // adjust self previous position
+
         this.shape.colour(this.colour); // color self
 
         this.shape.path.onMouseDrag = e => Cursor.drag(this, e); // draggable
@@ -76,4 +84,8 @@ export default abstract class Block implements IBlock
     {
         return this.m_group;
     }
+
+    public abstract disconnect(): boolean; // separate from its parent, if any
+
+    public abstract get top(): Block; // top-most parent
 }

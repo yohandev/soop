@@ -1,7 +1,6 @@
 export default abstract class Drawable
 {
     public abstract draw(): void;
-    public abstract erase(): void;
 
     public abstract get path(): paper.Item;
 
@@ -10,4 +9,14 @@ export default abstract class Drawable
 
     public abstract get height(): number;
     public abstract set height(n:number);
+
+    public erase(): void
+    {
+        if (this.path)
+        {
+            this.path.onMouseDown = undefined;
+            this.path.onMouseDrag = undefined;
+            this.path.remove();
+        }
+    }
 }

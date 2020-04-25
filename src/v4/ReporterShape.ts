@@ -10,11 +10,6 @@ export default class ReporterShape extends Shape
         this.m_path = new Path(`M20.5.5h45a20,20,0,0,1,20,20h0a20,20,0,0,1-20,20h-45a20,20,0,0,1-20-20h0A20,20,0,0,1,20.5.5Z`);
     }
 
-    public erase(): void
-    {
-        this.m_path.remove();
-    }
-
     public get path(): paper.Item
     {
         return this.m_path;

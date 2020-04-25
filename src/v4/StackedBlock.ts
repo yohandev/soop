@@ -3,6 +3,7 @@ import Block from "./Block";
 export default abstract class StackedBlock extends Block
 {
     private m_next: StackedBlock;
+    private m_prev: StackedBlock;
 
     public draw(): void
     {
@@ -24,9 +25,35 @@ export default abstract class StackedBlock extends Block
         return this.m_next;
     }
 
+    public get top(): StackedBlock
+    {
+        if (!this.m_prev)
+        {
+            return this;
+        }
+        return this.m_prev.top;
+    }
+
     public connect(b: StackedBlock): boolean
     {
-        this.m_next = b;
+        this.m_next = b; // this -> b
+        b.m_prev = this; // b <- this
+
+        return true;
+    }
+
+    public disconnect(): boolean
+    {
+        if (!this.m_prev) // no previous, can't disconnect
+        {
+            return false;
+        }
+
+        this.m_prev.m_next = undefined; // prev no longer knows about this
+        this.top.draw(); // redraw entire script except this
+
+        this.m_prev = undefined; // this no longer knows about prev
+        this.draw(); // redraw this
 
         return true;
     }

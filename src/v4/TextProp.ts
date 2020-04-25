@@ -26,11 +26,6 @@ export default class TextProp extends Prop
         });
     }
 
-    public erase(): void
-    {
-        this.text.remove();
-    }
-
     public get path(): paper.Item
     {
         return this.text;

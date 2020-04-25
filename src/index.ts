@@ -7,6 +7,7 @@ import GoToBlock from "./v4/GoToBlock";
 import ReporterInputProp from "./v4/ReporterInputProp";
 import PositionXBlock from "./v4/PositionXBlock";
 import Cursor from "./v4/Cursor";
+import { Path, Point } from "paper";
 
 function init()
 {
@@ -16,8 +17,13 @@ function init()
 	
 	const b = new GoToBlock();
 	
-	(b["props"][2] as ReporterInputProp)["m_value"] = new PositionXBlock();
-	b.connect(new GoToBlock());
+	(b["props"][2] as ReporterInputProp).value = new PositionXBlock();
+	
+	const b2 = new GoToBlock();
+	b.connect(b2);
+
+	b2.connect(new GoToBlock());
+
 	b.draw();
 
 	// Cursor.init(); // init cursor
@@ -69,5 +75,16 @@ window.onkeypress = (e: KeyboardEvent) =>
 	if (e.key == 'r')
 	{
 		Transpiler.Class("myClass");
+	}
+	if (e.key == ' ')
+	{
+		console.log("we're not frozen yet!");
+		new Path.Rectangle
+		({
+			position: [200, 100],
+			width: 200,
+			height: 100,
+			fillColor: 'red'
+		});
 	}
 }

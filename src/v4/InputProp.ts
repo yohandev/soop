@@ -25,13 +25,15 @@ export default abstract class InputProp<T extends NestedBlock> extends Prop
         }
     }
 
-    public erase(): void
-    {
-        if (this.m_empty)
-        {
-            this.m_empty.erase();
-        }
-    }
+    // public erase(): void
+    // {
+    //     super.erase();
+
+    //     if (this.m_empty)
+    //     {
+    //         this.m_empty.erase();
+    //     }
+    // }
 
     public get path(): paper.Item
     {
@@ -96,4 +98,19 @@ export default abstract class InputProp<T extends NestedBlock> extends Prop
     }
     
     protected abstract get empty(): { shape: Shape, colour: Colour };
+
+    public get value(): T
+    {
+        return this.m_value;
+    }
+
+    public set value(a: T)
+    {
+        this.m_value = a;
+
+        if (this.m_value)
+        {
+            this.m_value.container = this;
+        }
+    }
 }
