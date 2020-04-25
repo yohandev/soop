@@ -62,22 +62,19 @@ function init()
 }
 
 window.onload = init;
+
 window.onkeypress = (e: KeyboardEvent) =>
 {
-	if (e.key == 'o')
-	{
-		BlockEnvironment.add(new OrBlock());
-	}
-	if (e.key == 'm')
-	{
-		BlockEnvironment.add(new MultiplyBlock());
-	}
-	if (e.key == 'r')
-	{
-		Transpiler.Class("myClass");
-	}
 	if (e.key == ' ')
 	{
-		Workspace.active.reload();
+		Workspace.active.highlight_loose();
+	}
+}
+
+window.onkeyup = (e: KeyboardEvent) =>
+{
+	if (e.key == ' ')
+	{
+		Workspace.active.unhighlight_loose();
 	}
 }

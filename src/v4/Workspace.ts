@@ -89,6 +89,16 @@ export default class Workspace
         this.load();
     }
 
+    public highlight_loose(): void
+    {
+        this.blocks.forEach(b => b.shape.colour({ fill: b.colour.fill, stroke: 'red' }));
+    }
+
+    public unhighlight_loose(): void
+    {
+        this.blocks.forEach(b => b.shape.colour(b.colour));
+    }
+
     public static get active(): Workspace
     {
         return this.m_active;

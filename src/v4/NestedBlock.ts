@@ -43,6 +43,8 @@ export default abstract class NestedBlock extends Block
 
         (b as InputProp<this>).value =  this; // todo check reporter or boolean 
         ((b as InputProp<this>).parent as Block).top.draw();
+
+        return true;
     }
 
     public set container(c: InputProp<this>)
