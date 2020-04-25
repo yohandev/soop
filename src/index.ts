@@ -78,13 +78,6 @@ window.onkeypress = (e: KeyboardEvent) =>
 	}
 	if (e.key == ' ')
 	{
-		console.log("we're not frozen yet!");
-		new Path.Rectangle
-		({
-			position: [200, 100],
-			width: 200,
-			height: 100,
-			fillColor: 'red'
-		});
+		Workspace.active.reload();
 	}
 }

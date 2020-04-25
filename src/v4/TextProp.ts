@@ -54,7 +54,7 @@ export default class TextProp extends Prop
 
     public visit(func: (v: IVisitable) => void): void
     {
-        return;
+        func(this);
     }
 
     public intersects(b: Rectangle): boolean

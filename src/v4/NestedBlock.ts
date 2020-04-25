@@ -31,6 +31,11 @@ export default abstract class NestedBlock extends Block
 
     public connect(b: Block | Prop): boolean
     {
+        if (this.m_container)
+        {
+            return false; // already connected
+        }
+
         if (!(b instanceof InputProp))
         {
             return false;

@@ -35,6 +35,10 @@ export default abstract class InputProp<T extends NestedBlock> extends Prop
         {
             this.m_empty.erase();
         }
+        if (this.m_value)
+        {
+            this.m_value.shape.erase();
+        }
     }
 
     public get path(): paper.Item
@@ -110,7 +114,7 @@ export default abstract class InputProp<T extends NestedBlock> extends Prop
     {
         this.m_value = a;
 
-        if (this.m_value)
+        if (a)
         {
             this.m_value.container = this;
         }

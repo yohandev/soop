@@ -71,12 +71,21 @@ export default class Workspace
 
     private unload(): void
     {
+        for (const blo of this.blocks)
+        {
+            blo.visit(v =>
+            {
+                if ("erase" in v)
+                {
+                    (v as any).erase();
+                }
+            });
+        }
         this.blocks.forEach(b => { if (b.group) b.group.remove() }); // erase
     }
 
     public reload(): void
     {
-        this.unload();
         this.load();
     }
 

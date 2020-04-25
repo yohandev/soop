@@ -2,7 +2,7 @@ import IBlock from "./IBlock";
 import Prop from "./Prop";
 import Shape from "./Shape";
 import { Colour } from "./Colour";
-import { Group, Rectangle } from "paper";
+import { Group, Rectangle, Point } from "paper";
 import Cursor from "./Cursor";
 import IVisitable from "./IVisitable";
 import Drawable from "./Drawable";
@@ -29,7 +29,8 @@ export default abstract class Block implements IBlock, IVisitable
 
     public draw() // recursively draw
     {
-        let pos = paper.project.view.center; // default pos
+        // @ts-ignore
+        let pos = Point.random().multiply(paper.project.view.size); // default pos
 
         this.shape.erase(); // erase itself(important: clears events)
 

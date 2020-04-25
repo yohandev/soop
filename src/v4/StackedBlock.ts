@@ -30,7 +30,7 @@ export default abstract class StackedBlock extends Block
 
     public get top(): StackedBlock | undefined
     {
-        if (this.m_prev == undefined)
+        if (this.m_prev === undefined)
         {
             return this;
         }
