@@ -11,6 +11,7 @@ export default class Cursor
     public static init()
     {
         paper.project.view.onMouseUp = e => Cursor.stop(e); // register
+        paper.project.view.onMouseMove = e => Cursor.move(e);
     }
 
     public static drag(target: Block, e: MouseEvent): void
@@ -23,6 +24,14 @@ export default class Cursor
         {
             this.active = target;
             this.start = e.point;
+        }
+    }
+
+    private static move(e: paper.MouseEvent): void
+    {
+        if (!this.active)
+        {
+            return; // no drag
         }
 
         this.active.group.translate(e.delta); // move
