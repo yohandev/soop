@@ -1,6 +1,5 @@
 import Block from "./Block";
 import Cursor from "./Cursor";
-import InputProp from "./InputProp";
 import Prop from "./Prop";
 
 export default class Workspace
@@ -17,13 +16,15 @@ export default class Workspace
     public add(b: Block)
     {
         this.blocks.push(b);
+
+        b.draw();
     }
 
     public disconnect(block: Block): boolean
     {
         if (block.disconnect())
         {
-            this.add(block); // add to loose blocks
+            this.blocks.push(block); // add to loose blocks
 
             return true;
         }
@@ -66,27 +67,12 @@ export default class Workspace
 
     public load(): void
     {
-        this.blocks.forEach(b => b.draw()); // draw
+        this.blocks.forEach(b => b.group.visible = true);
     }
 
-    private unload(): void
+    public unload(): void
     {
-        for (const blo of this.blocks)
-        {
-            blo.visit(v =>
-            {
-                if ("erase" in v)
-                {
-                    (v as any).erase();
-                }
-            });
-        }
-        this.blocks.forEach(b => { if (b.group) b.group.remove() }); // erase
-    }
-
-    public reload(): void
-    {
-        this.load();
+        this.blocks.forEach(b => b.group.visible = false);
     }
 
     public highlight_loose(): void

@@ -63,18 +63,26 @@ function init()
 
 window.onload = init;
 
-window.onkeypress = (e: KeyboardEvent) =>
+window.onkeydown = (e: KeyboardEvent) =>
 {
-	if (e.key == ' ')
+	if (e.key == 'F1')
 	{
 		Workspace.active.highlight_loose();
+	}
+	if (e.key == 'F2')
+	{
+		Workspace.active.unload();
 	}
 }
 
 window.onkeyup = (e: KeyboardEvent) =>
 {
-	if (e.key == ' ')
+	if (e.key == 'F1')
 	{
 		Workspace.active.unhighlight_loose();
+	}
+	if (e.key == 'F2')
+	{
+		Workspace.active.load();
 	}
 }

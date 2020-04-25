@@ -70,18 +70,12 @@ export default abstract class StackedBlock extends Block
 
             n.disconnect();
             n.connect(this.bottom);
-            // const bo = this.bottom;
-
-            // bo.m_next = b.m_next;
-            // b.m_next.m_prev = bo;
         }
 
         b.m_next = this; // this -> b
         this.m_prev = b; // b <- this
 
-        console.log("starting draw");
         this.top.draw();
-        console.log("done draw");
 
         return true;
     }
