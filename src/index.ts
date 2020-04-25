@@ -11,25 +11,28 @@ import Transpiler from "./vm/Transpiler";
 import { Palette } from "./editor/Palette";
 import { Background } from "./editor/Background";
 import { Player } from "./vm/Player";
+import GoToBlock from "./v4/GoToBlock";
 
 function init()
 {
 	setup($("#editor")[0] as HTMLCanvasElement); // init paperjs
 	
-	Cursor.init(); // init cursor
-	Background.init();
-	Palette.init();
-	Player.init();
-	BlockEnvironment.init();
+	new GoToBlock().draw();
 
-	BlockEnvironment.add(new DefineBlock());
-	BlockEnvironment.add(new DefineBlock());
-	BlockEnvironment.add(new SetXBlock())
-	BlockEnvironment.add(new SetYBlock())
-	BlockEnvironment.add(new SetXBlock())
+	// Cursor.init(); // init cursor
+	// Background.init();
+	// Palette.init();
+	// Player.init();
+	// BlockEnvironment.init();
 
-	// COMMENTED OUT CODE BELOW IS DEV TOOL TO FIND WHICH VERTICES IN THE SVG PATHS HAVE TO DO WITH SCALING
-	// const path = new Path(SVG_DATA);
+	// BlockEnvironment.add(new DefineBlock());
+	// BlockEnvironment.add(new DefineBlock());
+	// BlockEnvironment.add(new SetXBlock())
+	// BlockEnvironment.add(new SetYBlock())
+	// BlockEnvironment.add(new SetXBlock())
+
+	//COMMENTED OUT CODE BELOW IS DEV TOOL TO FIND WHICH VERTICES IN THE SVG PATHS HAVE TO DO WITH SCALING
+	// const path = new Path(`M.5,4.5a4,4,0,0,1,4-4h8a5.2,5.2,0,0,1,4,2l4,4a5.2,5.2,0,0,0,4,2h12a5.2,5.2,0,0,0,4-2l4-4a5.2,5.2,0,0,1,4-2h131a4,4,0,0,1,4,4v40a4,4,0,0,1-4,4H48.5a5.2,5.2,0,0,0-4,2l-4,4a5.2,5.2,0,0,1-4,2h-12a5.2,5.2,0,0,1-4-2l-4-4a5.2,5.2,0,0,0-4-2h-8a4,4,0,0,1-4-4Z`);
 	// path.fillColor = 'green';
 
 	// let i = 0;
@@ -45,7 +48,7 @@ function init()
 	// 	}
 	// }
 
-	view.draw();
+	// view.draw();
 
 	//view.onFrame = render;
 
@@ -54,11 +57,11 @@ function init()
 window.onload = init;
 window.onkeypress = (e: KeyboardEvent) =>
 {
-	if (e.key == ' ')
+	if (e.key == 'o')
 	{
 		BlockEnvironment.add(new OrBlock());
 	}
-	if (e.key == 'a')
+	if (e.key == 'm')
 	{
 		BlockEnvironment.add(new MultiplyBlock());
 	}
