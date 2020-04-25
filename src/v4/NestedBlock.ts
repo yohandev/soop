@@ -4,7 +4,7 @@ import Prop from "./Prop";
 
 export default abstract class NestedBlock extends Block
 {
-    private m_container: InputProp<this>;
+    private m_container: InputProp;
 
     public draw(): void
     {
@@ -40,14 +40,20 @@ export default abstract class NestedBlock extends Block
         {
             return false;
         }
+        const inp = b as InputProp;
 
-        (b as InputProp<this>).value =  this; // todo check reporter or boolean 
-        ((b as InputProp<this>).parent as Block).top.draw();
+        if (!inp.compatible(this.shape.type))
+        {
+            return false;
+        }
+
+        inp.value =  this; // todo check reporter or boolean 
+        (inp.parent as Block).top.draw();
 
         return true;
     }
 
-    public set container(c: InputProp<this>)
+    public set container(c: InputProp)
     {
         this.m_container = c;
     }

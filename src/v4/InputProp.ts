@@ -6,9 +6,9 @@ import IVisitable from "./IVisitable";
 import { Rectangle } from "paper";
 import { ShapeType } from "./Shapes";
 
-export default abstract class InputProp<T extends NestedBlock> extends Prop
+export default abstract class InputProp extends Prop
 {
-    private m_value: T | undefined;
+    private m_value: NestedBlock | undefined;
     private m_empty: Shape;
 
     public draw(): void
@@ -105,14 +105,14 @@ export default abstract class InputProp<T extends NestedBlock> extends Prop
     }
     
     protected abstract get empty(): { shape: Shape, colour: Colour };
-    protected abstract compatible(s: ShapeType): boolean;
+    public abstract compatible(s: ShapeType): boolean;
 
-    public get value(): T
+    public get value(): NestedBlock
     {
         return this.m_value;
     }
 
-    public set value(a: T | undefined)
+    public set value(a: NestedBlock | undefined)
     {
         this.m_value = a;
 
