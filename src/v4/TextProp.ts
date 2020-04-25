@@ -18,6 +18,7 @@ export default class TextProp extends Prop
     {
         this.text = new PointText
         ({
+            point: [0, 0],
             content: this.content,
             fontSize: '1em',
             fillColor: 'white',

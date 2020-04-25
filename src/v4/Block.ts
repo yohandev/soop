@@ -6,65 +6,71 @@ import { Group } from "paper";
 
 export default abstract class Block implements IBlock
 {
-    public static readonly padding: number = 10;
+    public static readonly h_padding: number = 10;
+    public static readonly v_padding: number = 10;
 
     protected props: Prop[];
 
     public readonly shape: Shape;
-    public readonly color: Colour;
+    public readonly colour: Colour;
 
-    constructor(shape: Shape, color: Colour)
+    private m_group: Group;
+
+    constructor(shape: Shape, colour: Colour)
     {
         this.shape = shape;
-        this.color = color;
+        this.colour = colour;
 
         this.props = [];
     }
 
     public draw() // recursively draw
     {
-        if (this.shape.path)
+        if (this.m_group)
         {
-            this.shape.erase(); // <safe> erase self
+            this.m_group.remove();
         }
-        this.shape.draw(); // draw self
+        this.m_group = new Group();
 
-        let maxh = this.shape.height -2 * Block.padding; // max height
-        let offset = Block.padding;
+        this.shape.draw(); // draw self
+        this.m_group.addChild(this.shape.path);
+
+        let maxh = this.shape.height -2 * Block.v_padding; // max height
+        let offset = Block.h_padding;
         for (const prop of this.props)
         {
-            if (prop.path)
-            {
-                prop.erase(); // <safe> erase prop
-            }
             prop.draw(); // draw prop
+            this.m_group.addChild(prop.path); // group prop
 
             maxh = Math.max(maxh, prop.height); // update maxh
-            offset += prop.width + Block.padding * 2; // grow
+            offset += prop.width + Block.h_padding; // grow
         }
 
-        maxh += 2 * Block.padding;
+        maxh += 2 * Block.v_padding;
+        offset = Block.h_padding;
 
-        this.shape.path.position.y = maxh / 2; // vertical adjust self
-        this.shape.width = offset; // width adjust self
-        this.shape.height = maxh; // height adjust self
-
-        this.shape.color(this.color); // color self
-
-        offset = Block.padding;
         for (const prop of this.props) // adjust props
         {
             prop.path.position.x = offset + prop.width / 2; // horizontal adjust
             prop.path.position.y = maxh / 2; // vertical adjust
 
-            this.shape.path.addChild(prop.path); // group prop
-
-            offset += prop.width + Block.padding * 2; // grow
+            offset += prop.width + Block.h_padding; // grow
         }
+
+        this.m_group.position.y = maxh / 2; // vertical adjust self
+        this.shape.width = offset; // width adjust self
+        this.shape.height = maxh; // height adjust self
+
+        this.shape.colour(this.colour); // color self
     }
 
     protected add<T extends Prop>(prop: new(parent: Block, ...args: any[]) => T, ...args: any[]) // add prop
     {
         this.props.push(new prop(this, args));
+    }
+
+    public get group(): Group
+    {
+        return this.m_group;
     }
 }

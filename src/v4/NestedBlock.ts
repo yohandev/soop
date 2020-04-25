@@ -1,6 +1,6 @@
 import Block from "./Block";
 
-export default class NestedBlock extends Block
+export default abstract class NestedBlock extends Block
 {
-
+    
 }

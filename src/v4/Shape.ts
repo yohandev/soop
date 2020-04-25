@@ -3,7 +3,7 @@ import { Colour } from "./Colour";
 
 export default abstract class Shape extends Drawable
 {
-    public color(c: Colour): void
+    public colour(c: Colour): void
     {
         this.path.fillColor = c.fill;
         this.path.strokeColor = c.stroke;
