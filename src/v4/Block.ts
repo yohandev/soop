@@ -29,6 +29,8 @@ export default abstract class Block implements IBlock
     {
         let pos = paper.project.view.center; // default pos
 
+        this.shape.erase(); // erase itself(important: clears events)
+
         if (this.m_group)
         {
             pos = this.m_group.bounds.topLeft; // previous pos
@@ -38,7 +40,6 @@ export default abstract class Block implements IBlock
         }
         this.m_group = new Group();
 
-        this.shape.erase(); // erase itself(important: clears events)
         this.shape.draw(); // draw self
         this.m_group.addChild(this.shape.path);
 
@@ -85,6 +86,7 @@ export default abstract class Block implements IBlock
         return this.m_group;
     }
 
+    public abstract connect(b: Block | Prop): boolean; // join a new parent
     public abstract disconnect(): boolean; // separate from its parent, if any
 
     public abstract get top(): Block; // top-most parent

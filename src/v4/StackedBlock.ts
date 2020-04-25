@@ -1,4 +1,5 @@
 import Block from "./Block";
+import Prop from "./Prop";
 
 export default abstract class StackedBlock extends Block
 {
@@ -34,10 +35,34 @@ export default abstract class StackedBlock extends Block
         return this.m_prev.top;
     }
 
-    public connect(b: StackedBlock): boolean
+    private get bottom(): StackedBlock
     {
-        this.m_next = b; // this -> b
-        b.m_prev = this; // b <- this
+        if (!this.m_next)
+        {
+            return this;
+        }
+        return this.m_next.bottom;
+    }
+
+    public connect(b: Block | Prop): boolean
+    {
+        if (!(b instanceof StackedBlock))
+        {
+            return false; // only connects to stack
+        }
+        
+        if (b.m_next) // place block in between
+        {
+            const bo = this.bottom;
+
+            bo.m_next = b.m_next;
+            b.m_next.m_prev = bo;
+        } 
+
+        b.m_next = this; // this -> b
+        this.m_prev = b; // b <- this
+
+        b.top.draw();
 
         return true;
     }

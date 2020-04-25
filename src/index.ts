@@ -8,23 +8,24 @@ import ReporterInputProp from "./v4/ReporterInputProp";
 import PositionXBlock from "./v4/PositionXBlock";
 import Cursor from "./v4/Cursor";
 import { Path, Point } from "paper";
+import Workspace from "./v4/Workspace";
 
 function init()
 {
 	paper.setup($("#editor")[0] as HTMLCanvasElement); // init paperjs
 	
 	Cursor.init();
-	
+	Workspace.active = new Workspace();
+
 	const b = new GoToBlock();
 	
 	(b["props"][2] as ReporterInputProp).value = new PositionXBlock();
-	
-	const b2 = new GoToBlock();
-	b.connect(b2);
 
-	b2.connect(new GoToBlock());
+	Workspace.active.add(b);
+	Workspace.active.add(new GoToBlock());
+	Workspace.active.add(new GoToBlock());
 
-	b.draw();
+	Workspace.active.load();
 
 	// Cursor.init(); // init cursor
 	// Background.init();

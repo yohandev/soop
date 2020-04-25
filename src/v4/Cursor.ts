@@ -1,5 +1,6 @@
 import Block from "./Block";
 import { Point, MouseEvent } from "paper";
+import Workspace from "./Workspace";
 
 export default class Cursor
 {
@@ -38,7 +39,7 @@ export default class Cursor
 
         if (this.distance(e) > this.threshold) // drag away
         {
-            if (this.active.disconnect())
+            if (Workspace.active.disconnect(this.active))
             {
                 console.log("disconnected blocks!");
             }
@@ -52,9 +53,13 @@ export default class Cursor
             return; // no drag
         }
 
-        if (this.distance(e) < this.threshold)
+        if (Workspace.active.connect(this.active)) // connect
         {
-            this.active.top.draw(); // re-render to 'snap' back
+
+        }
+        else if (this.distance(e) < this.threshold) // 'snap' back
+        {
+            this.active.top.draw();
         }
 
         this.active = undefined;

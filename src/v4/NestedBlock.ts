@@ -1,5 +1,6 @@
 import Block from "./Block";
 import InputProp from "./InputProp";
+import Prop from "./Prop";
 
 export default abstract class NestedBlock extends Block
 {
@@ -19,6 +20,16 @@ export default abstract class NestedBlock extends Block
         this.draw(); // redraw this
 
         return true;
+    }
+
+    public connect(b: Block | Prop): boolean
+    {
+        if (!(b instanceof InputProp))
+        {
+            return false;
+        }
+
+        (b as InputProp<this>).value =  this; // todo check reporter or boolean
     }
 
     public set container(c: InputProp<this>)
