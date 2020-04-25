@@ -1,23 +1,22 @@
 import { view, setup, Path, Point } from "paper"
 import "../res/styles.css";
-import SetXBlock from "./editor/blocks/motion/SetXBlock";
-import SetYBlock from "./editor/blocks/motion/SetYBlock";
-import { Cursor } from "./editor/Cursor";
 import { BlockEnvironment } from "./editor/BlockEnvironment";
 import OrBlock from "./editor/blocks/operator/OrBlock";
 import MultiplyBlock from "./editor/blocks/operator/MultiplyBlock";
-import DefineBlock from "./editor/blocks/object/DefineBlock";
 import Transpiler from "./vm/Transpiler";
-import { Palette } from "./editor/Palette";
-import { Background } from "./editor/Background";
-import { Player } from "./vm/Player";
 import GoToBlock from "./v4/GoToBlock";
+import ReporterInputProp from "./v4/ReporterInputProp";
+import PositionXBlock from "./v4/PositionXBlock";
 
 function init()
 {
 	setup($("#editor")[0] as HTMLCanvasElement); // init paperjs
 	
-	new GoToBlock().draw();
+	const b = new GoToBlock();
+	
+	(b["props"][2] as ReporterInputProp)["m_value"] = new PositionXBlock();
+	b.connect(new GoToBlock());
+	b.draw();
 
 	// Cursor.init(); // init cursor
 	// Background.init();
