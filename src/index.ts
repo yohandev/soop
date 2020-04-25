@@ -11,6 +11,7 @@ import { Path, Point } from "paper";
 import Workspace from "./v4/Workspace";
 import EqualsBlock from "./v4/EqualsBlock";
 import AndBlock from "./v4/AndBlock";
+import DefineBlock from "./v4/DefineBlock";
 
 function init()
 {
@@ -25,6 +26,7 @@ function init()
 	Workspace.active.add(new EqualsBlock());
 	Workspace.active.add(new PositionXBlock());
 	Workspace.active.add(new AndBlock());
+	Workspace.active.add(new DefineBlock());
 
 	Workspace.active.load();
 
@@ -41,7 +43,7 @@ function init()
 	// BlockEnvironment.add(new SetXBlock())
 
 	//COMMENTED OUT CODE BELOW IS DEV TOOL TO FIND WHICH VERTICES IN THE SVG PATHS HAVE TO DO WITH SCALING
-	// const path = new Path(`M20.5.5h45a20,20,0,0,1,20,20h0a20,20,0,0,1-20,20h-45a20,20,0,0,1-20-20h0A20,20,0,0,1,20.5.5Z`);
+	// const path = new Path(`M.5,20.5a20,20,0,0,1,20-20h92a20,20,0,0,1,20,20v52a4,4,0,0,1-4,4h-80a5.2,5.2,0,0,0-4,2l-4,4a5.2,5.2,0,0,1-4,2h-12a5.2,5.2,0,0,1-4-2l-4-4a5.2,5.2,0,0,0-4-2h-8a4,4,0,0,1-4-4Z`);
 	// path.fillColor = 'green';
 
 	// let i = 0;
