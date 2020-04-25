@@ -8,25 +8,25 @@ import OrBlock from "./editor/blocks/operator/OrBlock";
 import MultiplyBlock from "./editor/blocks/operator/MultiplyBlock";
 import DefineBlock from "./editor/blocks/object/DefineBlock";
 import Transpiler from "./vm/Transpiler";
+import { Palette } from "./editor/Palette";
+import { Background } from "./editor/Background";
+import { Player } from "./vm/Player";
 
 function init()
 {
 	setup($("#editor")[0] as HTMLCanvasElement); // init paperjs
 	
 	Cursor.init(); // init cursor
+	Background.init();
+	Palette.init();
+	Player.init();
 	BlockEnvironment.init();
 
+	BlockEnvironment.add(new DefineBlock());
 	BlockEnvironment.add(new DefineBlock());
 	BlockEnvironment.add(new SetXBlock())
 	BlockEnvironment.add(new SetYBlock())
 	BlockEnvironment.add(new SetXBlock())
-
-	//BlockEnvironment.render();
-	// const myScript = new Script();
-
-	// myScript.push(new DefineBlock(new SetXBlock()));
-	// myScript.push(new SetXBlock());
-	// myScript.push(new SetXBlock(new MultiplicationBlock(new AdditionBlock(new MultiplicationBlock()))));
 
 	// COMMENTED OUT CODE BELOW IS DEV TOOL TO FIND WHICH VERTICES IN THE SVG PATHS HAVE TO DO WITH SCALING
 	// const path = new Path(SVG_DATA);
