@@ -1,8 +1,18 @@
 import Drawable from "./Drawable";
 import { Colour } from "./Colour";
+import { ShapeType } from "./Shapes";
 
 export default abstract class Shape extends Drawable
 {
+    public readonly type: ShapeType;
+
+    constructor(type: ShapeType)
+    {
+        super();
+
+        this.type = type;
+    }
+
     public colour(c: Colour): void
     {
         this.path.fillColor = c.fill;

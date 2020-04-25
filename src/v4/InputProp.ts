@@ -4,6 +4,7 @@ import Shape from "./Shape";
 import { Colour } from "./Colour";
 import IVisitable from "./IVisitable";
 import { Rectangle } from "paper";
+import { ShapeType } from "./Shapes";
 
 export default abstract class InputProp<T extends NestedBlock> extends Prop
 {
@@ -104,6 +105,7 @@ export default abstract class InputProp<T extends NestedBlock> extends Prop
     }
     
     protected abstract get empty(): { shape: Shape, colour: Colour };
+    protected abstract compatible(s: ShapeType): boolean;
 
     public get value(): T
     {
