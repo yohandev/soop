@@ -10,6 +10,7 @@ import Cursor from "./v4/Cursor";
 import { Path, Point } from "paper";
 import Workspace from "./v4/Workspace";
 import EqualsBlock from "./v4/EqualsBlock";
+import AndBlock from "./v4/AndBlock";
 
 function init()
 {
@@ -23,6 +24,7 @@ function init()
 	Workspace.active.add(new GoToBlock());
 	Workspace.active.add(new EqualsBlock());
 	Workspace.active.add(new PositionXBlock());
+	Workspace.active.add(new AndBlock());
 
 	Workspace.active.load();
 
