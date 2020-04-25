@@ -1,11 +1,24 @@
 import Block from "./Block";
 import Prop from "./Prop";
 import IVisitable from "./IVisitable";
+import Shape from "./Shape";
+import { Colour } from "./Colour";
 
 export default abstract class StackedBlock extends Block
 {
     private m_next: StackedBlock | undefined;
     private m_prev: StackedBlock | undefined;
+
+    public readonly hat: boolean;
+    public readonly cap: boolean;
+
+    constructor(shape: Shape, colour: Colour, hat = false, cap = false)
+    {
+        super(shape, colour);
+
+        this.hat = hat;
+        this.cap = cap;
+    }
 
     public draw(): void
     {
@@ -57,6 +70,10 @@ export default abstract class StackedBlock extends Block
         if (!(b instanceof StackedBlock))
         {
             return false; // only connects to stack
+        }
+        if (b.cap || this.hat)
+        {
+            return false; // hat or cap prevention
         }
 
         if (this.m_prev)

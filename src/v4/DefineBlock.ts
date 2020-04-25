@@ -7,7 +7,7 @@ export default class DefineBlock extends StackedBlock
 {
     constructor()
     {
-        super(Shapes.HAT, Colours.OBJECT);
+        super(Shapes.HAT, Colours.OBJECT, true);
 
         this.add(TextProp, "define");
     }
