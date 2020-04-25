@@ -14,6 +14,8 @@ export default abstract class StackedBlock extends Block
 
             this.m_next.group.bounds.topLeft = this.group.bounds.topLeft; // adjust position
             this.m_next.group.position.y += this.shape.height; // 'stack' below
+
+            this.group.addChild(this.m_next.group); // group
         }
     }
 

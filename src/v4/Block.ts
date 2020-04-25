@@ -62,6 +62,8 @@ export default abstract class Block implements IBlock
         this.shape.height = maxh; // height adjust self
 
         this.shape.colour(this.colour); // color self
+
+        this.shape.path.onMouseDrag = e => this.group.translate(e.delta);
     }
 
     protected add<T extends Prop>(prop: new(parent: Block, ...args: any[]) => T, ...args: any[]) // add prop
