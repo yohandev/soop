@@ -5,8 +5,8 @@ import Workspace from "./Workspace";
 export default class Editor
 {
     public static readonly padding = 20;
-    public static readonly palette_width = 40;
-    public static readonly player_width = 480;
+    public static readonly palette_width = 300;
+    public static readonly player_width = 480 / 2;
 
     private static m_active: Class;
     private static m_classes: Class[];
@@ -37,7 +37,7 @@ export default class Editor
         
         const rect = new Path.Rectangle
         ({
-            x: this.palette_width + this.padding,
+            x: this.palette_width + this.padding * 2,
             y: this.padding,
             width: this.width() - this.palette_width - this.player_width - this.padding * 3,
             height: this.height() - this.padding * 2,
@@ -68,6 +68,39 @@ export default class Editor
             ],
             clipped: true
         });
+
+        /* PALETTE */
+        const rect2 = new Path.Rectangle
+        ({
+            x: this.padding,
+            y: this.padding,
+            width: this.palette_width,
+            height: this.height() - this.padding * 2,
+            radius: 10,
+            strokeColor: '#303840',
+            fillColor: '#26282e',
+            strokeWidth: 7
+        });
+
+        const tabs = new Path.Rectangle
+        ({
+            x: this.padding,
+            y: this.padding,
+            width: 50,
+            height: this.height() - this.padding * 2,
+            fillColor: '#303840',
+        });
+
+        const palette_pane = new Group
+        ({
+            children:
+            [
+                /* clipping */ rect2,
+                /* border */ rect2.clone(),
+                /* tabs bg */ tabs
+            ],
+            clipped: true
+        })
     }
 
     public static width(): number
