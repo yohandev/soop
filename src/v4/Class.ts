@@ -35,13 +35,15 @@ export default class Class implements IClass
         this.m_palette.draw();
     }
 
-    public get blocks(): string[]
+    public get blocks(): { desc: string, owner: string }[]
     {
+        const mine = this.m_blocks.map(d => { return {desc: d, owner: this.name} });
+
         if (this.m_extends)
         {
-            return this.m_extends.blocks.concat(this.m_blocks);
+            return this.m_extends.blocks.concat(mine);
         }
-        return this.m_blocks;
+        return mine;
     }
 
     public get extends(): IClass

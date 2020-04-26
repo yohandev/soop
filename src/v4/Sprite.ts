@@ -6,7 +6,7 @@ export default class Sprite implements IClass
     public readonly name: string = "Sprite";
     public readonly extends: IClass = undefined;
 
-    public readonly blocks: string[] =
+    public readonly blocks: { desc: string, owner: string }[] =
     [
         /* MOTION */
         `{
@@ -44,5 +44,6 @@ export default class Sprite implements IClass
                 { type: 'reporter', args: ['y'] },
             ]
         }`, // set y
-    ]
+        
+    ].map(d => { return {desc: d, owner: this.name} });
 }

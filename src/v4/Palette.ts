@@ -25,15 +25,15 @@ export default class Palette
 
         let pos = new Point(Editor.padding * 2 + 60, Editor.header_height + Editor.padding * 3);
 
-        for (const desc of this.target.blocks)
+        for (const b of this.target.blocks)
         {
-            const parsed = Blocks.parse(desc);
-            let block = Blocks.create(desc);
+            const parsed = Blocks.parse(b.desc);
+            let block = Blocks.create(b.desc);
             
             block["draw_display"]();
             block.group.scale(0.7);
             block.group.bounds.topLeft = pos;
-            block.shape.path.onMouseDown = e => Workspace.active.add(Blocks.create(desc));
+            block.shape.path.onMouseDown = e => Workspace.active.add(Blocks.create(b.desc));
 
             this.m_scroll_pane.addChild(block.group);
 
@@ -41,14 +41,14 @@ export default class Palette
 
             console.log(parsed);
 
-            if (parsed.virtual === true)
+            if (parsed.virtual === true && b.owner !== this.target.name)
             {
-                block = new OverrideBlock(desc);
+                block = new OverrideBlock(b.desc);
 
                 block["draw_display"]();
                 block.group.scale(0.7);
                 block.group.bounds.topLeft = pos;
-                block.shape.path.onMouseDown = e => Workspace.active.add(new OverrideBlock(desc));
+                block.shape.path.onMouseDown = e => Workspace.active.add(new OverrideBlock(b.desc));
 
                 this.m_scroll_pane.addChild(block.group);
 

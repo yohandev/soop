@@ -228,7 +228,8 @@ export default class BlockEditor
             props:
             [
                 ${this.props.map(p => `{ type: '${p.type}', args: [${p.args.map(s => `"${s}"`).join(',')}] }`).join(',')}
-            ]
+            ],
+            virtual: true
         }`;
     }
 
