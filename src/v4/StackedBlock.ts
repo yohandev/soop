@@ -23,7 +23,6 @@ export default abstract class StackedBlock extends Block
     public draw(): void
     {
         super.draw();
-        this.shape.path.onMouseDown = e => console.log(`prev: ${this.m_prev}, next: ${this.m_next}`);
 
         if (this.m_next)
         {

@@ -5,7 +5,6 @@ import { Colour } from "./Colour";
 import { Group, Rectangle, Point } from "paper";
 import Cursor from "./Cursor";
 import IVisitable from "./IVisitable";
-import Drawable from "./Drawable";
 
 export default abstract class Block implements IBlock, IVisitable
 {

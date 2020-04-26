@@ -6,13 +6,6 @@ export default abstract class NestedBlock extends Block
 {
     private m_container: InputProp;
 
-    public draw(): void
-    {
-        super.draw();
-
-        this.shape.path.onMouseDown = e => console.log(this.m_container);
-    }
-
     public disconnect(): boolean
     {
         if (!this.m_container)
