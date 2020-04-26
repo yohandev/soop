@@ -5,6 +5,7 @@ import { Colours } from "./Colour";
 import Palette from "./Palette";
 import Sprite from "./Sprite";
 import BlockEditor from "./BlockEditor";
+import IClass from "./IClass";
 
 export default class Editor
 {
@@ -24,16 +25,16 @@ export default class Editor
 
     private static m_active: Class;
     private static m_classes: Class[];
+    private static m_sprite_class: IClass;
 
     private static m_script_pane: Group;
     private static m_palette_pane: Group;
 
     public static init(): void
     {
-        this.m_classes = [new Class("Player", new Sprite())];
+        this.m_sprite_class = new Sprite();
+        this.m_classes = [new Class("Player", this.m_sprite_class), new Class("Enemy", this.m_sprite_class)];
         this.active = this.m_classes[0];
-
-        this.draw();
     }
 
     private static draw(): void
@@ -250,6 +251,7 @@ export default class Editor
     {
         this.m_active = c;
         this.m_active.show();
+        this.draw();
     }
 
     public static get classes(): Class[]

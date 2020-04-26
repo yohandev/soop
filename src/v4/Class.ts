@@ -1,6 +1,7 @@
 import Workspace from "./Workspace";
 import Palette from "./Palette";
 import IClass from "./IClass";
+import Transpiler from "./Transpiler";
 
 export default class Class implements IClass
 {
@@ -54,5 +55,19 @@ export default class Class implements IClass
     public get name(): string
     {
         return this.m_name;
+    }
+
+    public transpile(t: Transpiler)
+    {
+        t.push_class(this.name, this.extends.name);
+
+        for (const block of this.m_workspace["blocks"])
+        {
+            //block.transpile(t);
+
+            t.pop_method();
+        }
+
+        t.pop_class();
     }
 }

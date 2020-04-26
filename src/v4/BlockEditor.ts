@@ -180,12 +180,43 @@ export default class BlockEditor
             fontFamily: 'Roboto',
             fontSize: '1em'
         })
-        cancel.bounds.center = rect2.bounds.center;
-        const cancel_btn = new Group([rect2, cancel]);
+        cancel.bounds.center = rect2.bounds.clone().center;
+        const cancel_btn = new Group([rect2.clone(), cancel]);
         cancel_btn.bounds.bottomRight = this.pane.bottomRight.clone().add([-150, -20]);
         cancel_btn.onClick = e => 
         {
             this.hide();
+        }
+
+        const variable = new PointText
+        ({
+            content: "create variable",
+            fillColor: Editor.Colours.TEXT,
+            justification: 'center',
+            fontFamily: 'Roboto',
+            fontSize: '1em'
+        })
+        rect2.fillColor = Colours.VARIABLES.fill;
+        variable.bounds.center = rect2.bounds.center;
+        const var_btn = new Group([rect2, variable]);
+        var_btn.bounds.bottomLeft = this.pane.bottomLeft.clone().add([20, -20]);
+        var_btn.onClick = e => 
+        {
+            const name = window.prompt("create a variable", "my variable");
+
+            const desc = `
+            {
+                shape: 'REPORTER',
+                category: 'VARIABLES',
+                props:
+                [
+                    { type: 'text', args: ['${name}'] },
+                ]
+            }
+            `
+            this.hide();
+
+            Editor.active.add(desc);
         }
 
         // close btn

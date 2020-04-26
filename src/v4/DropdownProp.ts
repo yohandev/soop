@@ -49,6 +49,16 @@ export default class DropdownProp extends Prop
         rect.bounds.center = ta.bounds.center;
 
         this.m_group = new Group([rect, ta]);
+
+        this.m_group.onClick = e =>
+        {
+            console.log(this.m_options());
+            if (++this.m_selected >= this.m_options().length)
+            {
+                this.m_selected = 0;
+            }
+            (this.m_group.children[1].children[0] as PointText).content = this.m_options()[this.m_selected];
+        }
     }
 
     public get path(): paper.Item
@@ -58,7 +68,7 @@ export default class DropdownProp extends Prop
 
     public get width(): number
     {
-        return this.m_group.children[0].bounds.width;
+        return this.m_group.bounds.width;
     }
     public set width(n: number)
     {
@@ -67,7 +77,7 @@ export default class DropdownProp extends Prop
 
     public get height(): number
     {
-        return this.m_group.children[0].bounds.width;
+        return this.m_group.bounds.height;
     }
 
     public set height(n: number)
@@ -77,11 +87,11 @@ export default class DropdownProp extends Prop
 
     public visit(func: (v: any) => void): void
     {
-        return;
+        func(this);
     }
 
     public intersects(b: paper.Rectangle): boolean
     {
-        return false;
+        return b.intersects(this.m_group.bounds);
     }
 }

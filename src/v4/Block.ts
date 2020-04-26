@@ -5,6 +5,7 @@ import { Colour } from "./Colour";
 import { Group, Rectangle, Point } from "paper";
 //import Cursor from "./Cursor";
 import IVisitable from "./IVisitable";
+import Transpiler from "./Transpiler";
 //import Workspace from "./Workspace";
 
 export default abstract class Block implements IBlock, IVisitable
@@ -16,15 +17,23 @@ export default abstract class Block implements IBlock, IVisitable
 
     public readonly shape: Shape;
     public readonly colour: Colour;
+    public readonly js: (t: Transpiler, obj: any) => void;
 
     private m_group: Group;
 
-    constructor(shape: Shape, colour: Colour)
+    constructor(shape: Shape, colour: Colour, js: (t: Transpiler, obj: any) => void)
     {
         this.shape = shape;
         this.colour = colour;
+        this.js = js;
 
         this.props = [];
+    }
+
+    public transpile(t: Transpiler)
+    {
+        this.js(t, this);
+
     }
 
     public draw() // recursively draw

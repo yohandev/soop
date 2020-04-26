@@ -7,6 +7,8 @@ import Block from "./Block";
 import TextProp from "./TextProp";
 import ReporterInputProp from "./ReporterInputProp";
 import BooleanInputProp from "./BooleanInputProp";
+import Transpiler from "./Transpiler";
+import DropdownProp from "./DropdownProp";
 
 export namespace Blocks
 {
@@ -49,6 +51,7 @@ export namespace Blocks
         const category = parsed["category"] as string;
         const props = parsed["props"] as { type: string, args?: any[] }[];
         const virtual = parsed["virtual"] as boolean || false;
+        const js = parsed["js"] as (t: Transpiler, obj: any) => void;
 
         const colour = (Colours as any)[category];
 
@@ -75,6 +78,7 @@ export namespace Blocks
             case "text": return block["add"](TextProp, ...desc.args);
             case "reporter": return block["add"](ReporterInputProp, ...desc.args);
             case "boolean": return block["add"](BooleanInputProp, ...desc.args);
+            case "dropdown": return block["add"](DropdownProp, ...desc.args);
             default: throw new Error(`Couldn't parse prop "${desc.type}"`);
         }
     }

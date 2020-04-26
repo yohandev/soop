@@ -3,9 +3,12 @@ import Cursor from "./v4/Cursor";
 import Workspace from "./v4/Workspace";
 import Editor from "./v4/Editor";
 import BlockEditor from "./v4/BlockEditor";
+import Class from "./v4/Class";
 
 function init()
 {
+	window.alert("Hey there! Welcome to soop. This is an early alpha version, and there's a lot of bugs, so please bear with me. I made this alone in six days, though the current version is made entirely in 48 hours. If something breaks just reload. You can't quite drag blocks out to create them yet, instead, just click them once. Press F4 to toggle the \'Gamer\' class that extends the Player one(works once, it's a debug tool :P).")
+
 	paper.setup($("#editor")[0] as HTMLCanvasElement); // init paperjs
 	
 	Cursor.init();
@@ -44,6 +47,11 @@ window.onkeydown = (e: KeyboardEvent) =>
 	if (e.key == 'F3')
 	{
 		window.prompt("current block", BlockEditor.desc());
+	}
+	if (e.key == 'F4')
+	{
+		Editor.classes.push(new Class("Gamer", Editor.classes[0]));
+		Editor.active = Editor.classes[2];
 	}
 }
 

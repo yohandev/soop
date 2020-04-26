@@ -6,6 +6,6 @@ export default class BooleanBlock extends NestedBlock
 {
     constructor(colour: Colour)
     {
-        super(Shapes.BOOLEAN, colour);
+        super(Shapes.BOOLEAN, colour, undefined);
     }
 }

@@ -1,4 +1,6 @@
-export default interface IClass
+import { ITranspilerTarget } from "./Transpiler";
+
+export default interface IClass extends ITranspilerTarget
 {
     name: string,
     extends: IClass;

@@ -14,7 +14,7 @@ export default abstract class StackedBlock extends Block
 
     constructor(shape: Shape, colour: Colour, hat = false, cap = false)
     {
-        super(shape, colour);
+        super(shape, colour, undefined);
 
         this.hat = hat;
         this.cap = cap;
