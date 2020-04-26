@@ -1,6 +1,6 @@
 import IClass from "./IClass";
 
-export default class SpriteClass implements IClass
+export default class Sprite implements IClass
 {
     public readonly extends: IClass = undefined;
 

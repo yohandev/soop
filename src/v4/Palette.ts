@@ -22,7 +22,7 @@ export default class Palette
         }
         this.m_scroll_pane = new Group();
 
-        let pos = new Point(Editor.padding * 2 + 60, Editor.padding * 2);
+        let pos = new Point(Editor.padding * 2 + 60, Editor.header_height + Editor.padding * 3);
 
         for (const desc of this.target.blocks)
         {

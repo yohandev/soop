@@ -1,20 +1,24 @@
 import Class from "./Class";
-import { Symbol, Path, CompoundPath, Group, PointText } from "paper";
+import { Symbol, Path, CompoundPath, Group, PointText, Point } from "paper";
 import Workspace from "./Workspace";
 import { Colours } from "./Colour";
 import Palette from "./Palette";
-import SpriteClass from "./SpriteClass";
+import Sprite from "./Sprite";
 
 export default class Editor
 {
-    public static readonly padding = 20;
+    public static readonly padding = 10;
+
     public static readonly palette_width = 300;
     public static readonly player_width = 480 / 2;
+    public static readonly header_height = 50;
 
     public static readonly Colours =
     {
         DARK: '#26282e',
-        LIGHT: '#303840'
+        LIGHT: '#303840',
+        TEXT: 'white',
+        SUBTEXT: '#aaaeb3'
     }
 
     private static m_active: Class;
@@ -25,14 +29,64 @@ export default class Editor
 
     public static init(): void
     {
-        this.m_classes = [this.active = new Class(new SpriteClass())];
+        this.m_classes = [this.active = new Class(new Sprite())];
 
         this.draw();
     }
 
     private static draw(): void
     {
-        /* BACKGROUND */
+        /* CLASS */
+        const header = new Path.Rectangle
+        ({
+            x: this.padding + 1.75,
+            y: this.padding + 1.75,
+            width: this.palette_width - 3.5,
+            height: this.header_height,
+            radius: 10,
+            strokeColor: Editor.Colours.LIGHT,
+            fillColor: Editor.Colours.DARK,
+            strokeWidth: 3.5
+        });
+
+        const size = '1.2em';
+        const txt0 = new PointText
+        ({
+            point: [0, 0],
+            content: "class ",
+            fillColor: Editor.Colours.SUBTEXT,
+            fontFamily: 'Roboto',
+            fontWeight: '700',
+            fontSize: size
+        })
+        const txt1 = new PointText
+        ({
+            point: [txt0.bounds.right, 0],
+            content: "Foo",
+            fillColor: Editor.Colours.TEXT,
+            fontFamily: 'Roboto',
+            fontSize: size
+        })
+        const txt2 = new PointText
+        ({
+            point: [txt1.bounds.right, 0],
+            content: " extends ",
+            fillColor: Editor.Colours.SUBTEXT,
+            fontFamily: 'Roboto',
+            fontWeight: 'italic 700',
+            fontSize: size
+        })
+        const txt3 = new PointText
+        ({
+            point: [txt2.bounds.right, 0],
+            content: "Sprite",
+            fillColor: Editor.Colours.TEXT,
+            fontFamily: 'Roboto',
+            fontSize: size
+        })
+        new Group([txt0, txt1, txt2, txt3]).bounds.leftCenter = new Point(this.padding * 2, header.bounds.center.y);
+
+        /* SCRIPT */
         const cross = new Symbol(new CompoundPath
         ({
             children:
@@ -83,9 +137,9 @@ export default class Editor
         const rect2 = new Path.Rectangle
         ({
             x: this.padding,
-            y: this.padding,
+            y: this.header_height + this.padding * 2,
             width: this.palette_width,
-            height: this.height() - this.padding * 2,
+            height: this.height() - this.header_height - this.padding * 3,
             radius: 10,
             strokeColor: Editor.Colours.LIGHT,
             fillColor: Editor.Colours.DARK,
@@ -102,8 +156,8 @@ export default class Editor
         });
 
         const circs = new Group();
-        const dy = tabs.bounds.height / 8;
-        let y = this.padding - dy / 2;
+        const dy = rect2.bounds.height / 8;
+        let y = rect2.bounds.top - dy / 2;
         for (const col in Colours)
         {
             const c = (Colours as any)[col];
@@ -121,7 +175,7 @@ export default class Editor
             ({
                 point: [tabs.bounds.center.x, y + 30],
                 content: col.toLowerCase(),
-                fillColor: 'white',
+                fillColor: Editor.Colours.TEXT,
                 justification: 'center',
                 fontFamily: 'Roboto',
                 fontSize: '0.7em'
