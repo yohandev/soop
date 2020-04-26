@@ -19,8 +19,6 @@ export default class DispenserProp extends Prop
     {
         super(parent);
 
-        console.log(args);
-
         this.m_shape = args[0];
         this.content = args[1] || "n";
     }

@@ -4,6 +4,7 @@ import Workspace from "./Workspace";
 import { Colours } from "./Colour";
 import Palette from "./Palette";
 import Sprite from "./Sprite";
+import BlockEditor from "./BlockEditor";
 
 export default class Editor
 {
@@ -79,12 +80,36 @@ export default class Editor
         const txt3 = new PointText
         ({
             point: [txt2.bounds.right, 0],
-            content: "Sprite",
+            content: this.active.extends.name,
             fillColor: Editor.Colours.TEXT,
             fontFamily: 'Roboto',
             fontSize: size
         })
-        new Group([txt0, txt1, txt2, txt3]).bounds.leftCenter = new Point(this.padding * 2, header.bounds.center.y);
+        const txts = new Group([txt0, txt1, txt2, txt3]);
+
+        txts.bounds.leftCenter = new Point(this.padding * 2, header.bounds.center.y);
+
+        const circ = new Path.Circle
+        ({
+            center: [header.bounds.right - 10 - this.padding, header.bounds.center.y],
+            radius: 10,
+            fillColor: Editor.Colours.DARK,
+            strokeColor: Editor.Colours.LIGHT,
+            strokeWidth: 3
+        })
+        const plus = new CompoundPath
+        ({
+            children:
+            [
+                new Path.Rectangle({ position: [0, 0], width: 10, height: 3, radius: 1 }),
+                new Path.Rectangle({ position: [0, 0], width: 3, height: 10, radius: 1 }),
+            ],
+            fillColor: Editor.Colours.LIGHT
+        })
+        plus.bounds.center = circ.bounds.center;
+
+        const btn = new Group([circ, plus]);
+        btn.onMouseDown = e => BlockEditor.show();
 
         /* SCRIPT */
         const cross = new Symbol(new CompoundPath
@@ -95,7 +120,6 @@ export default class Editor
                 new Path.Rectangle({ position: [0, 0], width: 2, height: 20, radius: 3 }),
             ],
             fillColor: Editor.Colours.LIGHT,
-            //opacity: 0.1,
             rotation: 45
         }))
         

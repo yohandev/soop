@@ -14,8 +14,6 @@ export default class DefineBlock extends StackedBlock
 
         this.add(TextProp, "define", "italic 700");
 
-        console.log(parsed);
-
         for (const prop of parsed.props)
         {
             switch (prop.type)

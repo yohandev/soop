@@ -2,6 +2,8 @@ import IClass from "./IClass";
 
 export default class Sprite implements IClass
 {
+
+    public readonly name: string = "Sprite";
     public readonly extends: IClass = undefined;
 
     public readonly blocks: string[] =
