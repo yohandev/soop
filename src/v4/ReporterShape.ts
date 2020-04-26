@@ -8,6 +8,7 @@ export default class ReporterShape extends Shape
     public draw(): void
     {
         this.m_path = new Path(`M20.5.5h45a20,20,0,0,1,20,20h0a20,20,0,0,1-20,20h-45a20,20,0,0,1-20-20h0A20,20,0,0,1,20.5.5Z`);
+        this.width = 50;
     }
 
     public get path(): paper.Item

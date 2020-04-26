@@ -8,6 +8,7 @@ export default class BooleanShape extends Shape
     public draw(): void
     {
         this.m_path = new Path(`M20.71.5h105l20,20h0l-20,20h-105l-20-20h0Z`);
+        this.width = 70;
     }
 
     public get path(): paper.Item

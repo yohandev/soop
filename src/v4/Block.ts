@@ -33,12 +33,26 @@ export default abstract class Block implements IBlock, IVisitable
         // @ts-ignore
         let pos = Point.random().multiply(Editor.script_pane.bounds.size); // default pos
 
+        if (this.m_group)
+        {
+            pos = this.m_group.bounds.topLeft; // previous position
+        }
+
+        this.draw_display(); // draw display
+        
+        this.m_group.bounds.topLeft = pos; // adjust self previous position
+
+        this.shape.path.onMouseDrag = e => Cursor.drag(this, e); // draggable
+
+        Workspace.active.group.addChild(this.m_group) // add to workspace
+    }
+
+    public draw_display()
+    {
         this.shape.erase(); // erase itself(important: clears events)
 
         if (this.m_group)
         {
-            pos = this.m_group.bounds.topLeft; // previous pos
-
             this.m_group.onMouseDrag = undefined;
             this.m_group.remove();
         }
@@ -74,13 +88,7 @@ export default abstract class Block implements IBlock, IVisitable
         this.shape.width = offset; // width adjust self
         this.shape.height = maxh; // height adjust self
 
-        this.m_group.bounds.topLeft = pos; // adjust self previous position
-
         this.shape.colour(this.colour); // color self
-
-        this.shape.path.onMouseDrag = e => Cursor.drag(this, e); // draggable
-
-        Workspace.active.group.addChild(this.m_group) // add to workspace
     }
 
     protected add<T extends Prop>(prop: new(parent: Block, ...args: any[]) => T, ...args: any[]) // add prop

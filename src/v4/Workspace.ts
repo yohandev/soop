@@ -76,7 +76,12 @@ export default class Workspace
                 {
                     if (block.connect(b as Block | Prop))
                     {
-                        this.blocks.splice(this.blocks.indexOf(block), 1) // rm from loose blocks
+                        let index = this.blocks.indexOf(block);
+
+                        if (index >= 0)
+                        {
+                            this.blocks.splice(index, 1) // rm from loose blocks
+                        }
 
                         found = true; // connected ;; done
                     }
@@ -99,7 +104,7 @@ export default class Workspace
 
     public highlight_loose(): void
     {
-        this.blocks.forEach(b => b.shape.colour({ fill: b.colour.fill, stroke: 'red' }));
+        this.blocks.forEach(b => b.shape.colour({ fill: b.colour.fill, stroke: 'white' }));
     }
 
     public unhighlight_loose(): void

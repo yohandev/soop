@@ -2,6 +2,8 @@ import Class from "./Class";
 import { Symbol, Path, CompoundPath, Group, PointText } from "paper";
 import Workspace from "./Workspace";
 import { Colours } from "./Colour";
+import Palette from "./Palette";
+import IClass from "./IClass";
 
 export default class Editor
 {
@@ -19,10 +21,13 @@ export default class Editor
     private static m_classes: Class[];
 
     private static m_script_pane: Group;
+    private static m_palette_pane: Group;
 
-    public static init(): void
+    public static init(sprite: IClass): void
     {
-        this.m_classes = [this.active = new Class(undefined)];
+        //SpriteBlocks().forEach(b => this.SpriteClass["m_blocks"].push(b));
+
+        this.m_classes = [this.active = new Class(sprite)];
 
         this.draw();
     }
@@ -125,7 +130,7 @@ export default class Editor
             }))
         }
 
-        const palette_pane = new Group
+        this.m_palette_pane = new Group
         ({
             children:
             [
@@ -136,6 +141,7 @@ export default class Editor
             ],
             clipped: true
         })
+        this.m_palette_pane.moveBelow(Palette.active.group);
     }
 
     public static width(): number
@@ -151,6 +157,11 @@ export default class Editor
     public static get script_pane(): Group
     {
         return this.m_script_pane;
+    }
+
+    public static get palette_pane(): Group
+    {
+        return this.m_palette_pane;
     }
 
     public static get active(): Class
