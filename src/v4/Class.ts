@@ -4,6 +4,7 @@ import IClass from "./IClass";
 
 export default class Class implements IClass
 {
+    private m_name: string;
     private m_extends: IClass;
 
     private m_palette: Palette;
@@ -11,8 +12,9 @@ export default class Class implements IClass
 
     private m_blocks: string[]; // block desc.
 
-    constructor(extend: IClass)
+    constructor(name: string, extend: IClass)
     {
+        this.m_name = name;
         this.m_extends = extend;
         this.m_blocks = [];
 
@@ -38,5 +40,10 @@ export default class Class implements IClass
     public get extends(): IClass
     {
         return this.m_extends;
+    }
+
+    public get name(): string
+    {
+        return this.m_name;
     }
 }

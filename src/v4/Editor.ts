@@ -29,7 +29,7 @@ export default class Editor
 
     public static init(): void
     {
-        this.m_classes = [this.active = new Class(new Sprite())];
+        this.m_classes = [this.active = new Class("Player", new Sprite())];
 
         this.draw();
     }
@@ -62,7 +62,7 @@ export default class Editor
         const txt1 = new PointText
         ({
             point: [txt0.bounds.right, 0],
-            content: "Foo",
+            content: this.active.name,
             fillColor: Editor.Colours.TEXT,
             fontFamily: 'Roboto',
             fontSize: size
@@ -112,9 +112,9 @@ export default class Editor
         });
 
         const crosses = new Group();
-        for (let x = rect.bounds.left + 35; x < rect.bounds.right; x += 70)
+        for (let x = rect.bounds.left + 3; x <= rect.bounds.right + 70; x += 70)
         {
-            for (let y = rect.bounds.top + 35; y < rect.bounds.bottom; y += 70)
+            for (let y = rect.bounds.top + 3; y <= rect.bounds.bottom + 70; y += 70)
             {
                 // @ts-ignore
                 crosses.addChild(cross.place([x, y]));

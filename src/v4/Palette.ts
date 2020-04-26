@@ -35,7 +35,7 @@ export default class Palette
 
             this.m_scroll_pane.addChild(block.group);
 
-            pos.y += block.shape.height + Editor.padding;
+            pos.y += block.shape.height + Editor.padding * 2;
         }
     }
 
