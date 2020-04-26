@@ -2,11 +2,10 @@ import IBlock from "./IBlock";
 import Prop from "./Prop";
 import Shape from "./Shape";
 import { Colour } from "./Colour";
-import { Group, Rectangle, Point } from "paper";
+import { Group, Rectangle } from "paper";
 import Cursor from "./Cursor";
 import IVisitable from "./IVisitable";
 import Workspace from "./Workspace";
-import Editor from "./Editor";
 
 export default abstract class Block implements IBlock, IVisitable
 {
@@ -31,7 +30,7 @@ export default abstract class Block implements IBlock, IVisitable
     public draw() // recursively draw
     {
         // @ts-ignore
-        let pos = Point.random().multiply(Editor.script_pane.bounds.size); // default pos
+        let pos = Editor.script_pane.position; // default pos
 
         if (this.m_group)
         {

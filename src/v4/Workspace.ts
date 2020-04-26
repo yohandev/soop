@@ -1,7 +1,7 @@
 import Block from "./Block";
 import Cursor from "./Cursor";
 import Prop from "./Prop";
-import { Group, Point, Rectangle } from "paper";
+import { Group, Rectangle } from "paper";
 import Editor from "./Editor";
 
 export default class Workspace

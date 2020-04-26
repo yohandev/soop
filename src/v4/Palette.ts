@@ -1,6 +1,7 @@
-import { Group, Path, Point, Size } from "paper";
+import { Group, Point } from "paper";
 import Class from "./Class";
 import Editor from "./Editor";
+import { Blocks } from "./Blocks";
 
 export default class Palette
 {
@@ -22,10 +23,11 @@ export default class Palette
 
         let pos = new Point(Editor.padding * 2 + 60, Editor.padding * 2);
 
-        for (const block of this.target.blocks)
+        for (const desc of this.target.blocks)
         {
-            (block as any)["draw_display"]();
-
+            const block = Blocks.create(desc);
+            
+            block["draw_display"]();
             block.group.scale(0.5);
             block.group.bounds.topLeft = pos;
 

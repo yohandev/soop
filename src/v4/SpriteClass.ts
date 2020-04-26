@@ -1,22 +1,34 @@
 import IClass from "./IClass";
-import GoToBlock from "./GoToBlock";
-import EqualsBlock from "./EqualsBlock";
-import PositionXBlock from "./PositionXBlock";
-import IBlock from "./IBlock";
-import AndBlock from "./AndBlock";
 
 export default class SpriteClass implements IClass
 {
     public readonly extends: IClass = undefined;
 
-    public readonly blocks: IBlock[] =
+    public readonly blocks: string[] =
     [
         /* MOTION */
-        new GoToBlock(),
-        new PositionXBlock(),
+        `{
+            shape: 'STACK',
+            category: 'MOTION',
+            props:
+            [
+                { type: 'text', args: ['go to'] },
+                { type: 'text', args: ['x:'] },
+                { type: 'reporter' },
+                { type: 'text', args: ['y:'] },
+                { type: 'reporter' }
+            ]
+        }`, // go to
 
-        /* OPERATORS */
-        new EqualsBlock(),
-        new AndBlock()
+        `{
+            shape: 'STACK',
+            category: 'MOTION',
+            props:
+            [
+                { type: 'text', args: ['set'] },
+                { type: 'text', args: ['x:'] },
+                { type: 'reporter' },
+            ]
+        }` // set x
     ]
 }

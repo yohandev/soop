@@ -3,7 +3,6 @@ import { Symbol, Path, CompoundPath, Group, PointText } from "paper";
 import Workspace from "./Workspace";
 import { Colours } from "./Colour";
 import Palette from "./Palette";
-import IClass from "./IClass";
 
 export default class Editor
 {
@@ -23,11 +22,9 @@ export default class Editor
     private static m_script_pane: Group;
     private static m_palette_pane: Group;
 
-    public static init(sprite: IClass): void
+    public static init(): void
     {
-        //SpriteBlocks().forEach(b => this.SpriteClass["m_blocks"].push(b));
-
-        this.m_classes = [this.active = new Class(sprite)];
+        this.m_classes = [this.active = new Class(undefined)];
 
         this.draw();
     }

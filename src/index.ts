@@ -7,14 +7,13 @@ import EqualsBlock from "./v4/EqualsBlock";
 import AndBlock from "./v4/AndBlock";
 import DefineBlock from "./v4/DefineBlock";
 import Editor from "./v4/Editor";
-import SpriteClass from "./v4/SpriteClass";
 
 function init()
 {
 	paper.setup($("#editor")[0] as HTMLCanvasElement); // init paperjs
 	
 	Cursor.init();
-	Editor.init(new SpriteClass());
+	Editor.init();
 
 	Workspace.active.add(new GoToBlock());
 	Workspace.active.add(new GoToBlock());

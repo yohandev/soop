@@ -1,7 +1,6 @@
 import Workspace from "./Workspace";
 import Palette from "./Palette";
 import IClass from "./IClass";
-import IBlock from "./IBlock";
 
 export default class Class implements IClass
 {
@@ -10,7 +9,7 @@ export default class Class implements IClass
     private m_palette: Palette;
     private m_workspace: Workspace;
 
-    private m_blocks: IBlock[];
+    private m_blocks: string[]; // block desc.
 
     constructor(extend: IClass)
     {
@@ -27,7 +26,7 @@ export default class Class implements IClass
         Palette.active = this.m_palette;
     }
 
-    public get blocks(): IBlock[]
+    public get blocks(): string[]
     {
         if (this.m_extends)
         {
