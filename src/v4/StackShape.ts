@@ -22,7 +22,7 @@ export default class StackShape extends Shape
 
     public set width(n: number) // 10-13 inclusive
     {
-        const a = n - this.width;
+        const a = Math.max(n, 60) - this.width;
 
         this.range(10, 13).forEach(n => this.m_path.segments[n].point.x += a);
     }

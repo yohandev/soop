@@ -1,8 +1,9 @@
-import { project, Layer, Path, Point, CompoundPath, Rectangle, Group, PointText, Size } from "paper";
+import { project, Layer, Path, Point, CompoundPath, Rectangle, Group, PointText, Size, TextItem, Color } from "paper";
 import Editor from "./Editor";
 import { Blocks } from "./Blocks";
 import Block from "./Block";
 import { Colours } from "./Colour";
+import Shapes from "./Shapes";
 
 export default class BlockEditor
 {
@@ -10,6 +11,7 @@ export default class BlockEditor
     private static layer: Layer;
 
     private static pane: Rectangle;
+    private static btns: Group;
 
     // block currently editing
     private static category: string;
@@ -77,7 +79,66 @@ export default class BlockEditor
                 fontSize: '0.7em'
             }))
         }
-        circs.bounds.center = this.pane.topCenter.clone().add([0, 150]);
+        circs.bounds.center = this.pane.topCenter.clone().add([0, 200]);
+
+        // prop btns
+        const rect = new Path.Rectangle
+        ({
+            width: 100,
+            height: 80,
+            fillColor: Editor.Colours.LIGHT,
+            strokeColor: Editor.Colours.DARK,
+            strokeWidth: 3.5,
+            radius: 10
+        })
+
+        // text btn
+        const txt = new PointText
+        ({
+            content: "text",
+            fillColor: Editor.Colours.TEXT,
+            justification: 'center',
+            fontFamily: 'Roboto',
+            fontSize: '1.5em'
+        })
+        txt.bounds.center = rect.bounds.center;
+        const text_btn = new Group([rect.clone(), txt]);
+        text_btn.onClick = e => 
+        {
+            this.props.push({ type: 'text', args: [window.prompt("text label", "describe your block!")] })
+            this.refresh_block();
+        }
+
+        // boolean btn
+        const shape = Shapes.BOOLEAN;
+        shape.draw();
+        shape.colour({ fill: Editor.Colours.LIGHT, stroke: Editor.Colours.DARK });
+        shape.path.bounds.center = rect.bounds.center;
+        shape.path.strokeWidth = 3.5;
+        const bool_btn = new Group([rect.clone(), shape.path]);
+        bool_btn.position.x += 150;
+        bool_btn.onClick = e =>
+        {
+            this.props.push({ type: 'boolean', args: [window.prompt("add an input", "true or false")] })
+            this.refresh_block();
+        }
+
+        // reporter btn
+        const shape2 = Shapes.REPORTER;
+        shape2.draw();
+        shape2.colour({ fill: Editor.Colours.LIGHT, stroke: Editor.Colours.DARK });
+        shape2.path.bounds.center = rect.bounds.center;
+        shape2.path.strokeWidth = 3.5;
+        const rep_btn = new Group([rect, shape2.path]);
+        rep_btn.position.x += 150 * 2;
+        rep_btn.onClick = e =>
+        {
+            this.props.push({ type: 'reporter', args: [window.prompt("add an input", "number, text, or object")] })
+            this.refresh_block();
+        }
+
+        this.btns = new Group([text_btn, rep_btn, bool_btn]);
+        this.btns.bounds.center = this.pane.topCenter.clone().add([0, 300]);
 
         // close btn
         const x = new CompoundPath
@@ -90,7 +151,7 @@ export default class BlockEditor
             fillColor: Editor.Colours.TEXT,
             rotation: 45
         });
-        x.onMouseDown = e => this.hide();
+        x.onClick = e => this.hide();
 
         this.first.activate();
     }
@@ -110,7 +171,7 @@ export default class BlockEditor
         this.refresh_block();
     }
 
-    private static desc(): string
+    public static desc(): string
     {
         return `
         {
@@ -118,11 +179,7 @@ export default class BlockEditor
             category: '${this.category}',
             props:
             [
-                { type: 'text', args: ['go to'] },
-                { type: 'text', args: ['x:'] },
-                { type: 'reporter', args: ['x'] },
-                { type: 'text', args: ['y:'] },
-                { type: 'reporter', args: ['y'] }
+                ${this.props.map(p => `{ type: '${p.type}', args: [${p.args.map(s => `"${s}"`).join(',')}] }`).join(',')}
             ]
         }`;
     }
@@ -136,7 +193,22 @@ export default class BlockEditor
         this.block = Blocks.create(this.desc());
 
         this.block.draw_display();
-        this.block.group.bounds.topCenter = this.pane.topCenter.clone().add([0, 30]);
+        this.block.group.bounds.topCenter = this.pane.topCenter.clone().add([0, 60]);
+
+        // update btns
+        this.btns.children.forEach(c =>
+        {
+            const fill = (Colours as any)[this.category].fill;
+            const stroke = (Colours as any)[this.category].stroke;
+
+            if (!(c.children[1] instanceof PointText)) // text
+            {
+                c.children[1].fillColor = '#0000000F';
+                c.children[1].strokeColor = stroke;
+            }
+            c.children[0].fillColor = fill;
+            c.children[0].strokeColor = stroke;
+        })
     }
 
     public static hide()
