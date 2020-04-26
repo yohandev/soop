@@ -3,6 +3,7 @@ import Cursor from "./v4/Cursor";
 import Workspace from "./v4/Workspace";
 import DefineBlock from "./v4/DefineBlock";
 import Editor from "./v4/Editor";
+import Sprite from "./v4/Sprite";
 
 function init()
 {
@@ -11,7 +12,7 @@ function init()
 	Cursor.init();
 	Editor.init();
 
-	Workspace.active.add(new DefineBlock());
+	Workspace.active.add(new DefineBlock(new Sprite().blocks[0]));
 
 	//COMMENTED OUT CODE BELOW IS DEV TOOL TO FIND WHICH VERTICES IN THE SVG PATHS HAVE TO DO WITH SCALING
 	// const path = new Path(`M.5,20.5a20,20,0,0,1,20-20h92a20,20,0,0,1,20,20v52a4,4,0,0,1-4,4h-80a5.2,5.2,0,0,0-4,2l-4,4a5.2,5.2,0,0,1-4,2h-12a5.2,5.2,0,0,1-4-2l-4-4a5.2,5.2,0,0,0-4-2h-8a4,4,0,0,1-4-4Z`);

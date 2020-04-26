@@ -6,13 +6,16 @@ import IVisitable from "./IVisitable";
 export default class TextProp extends Prop
 {
     private content: string;
+    private style: string;
+
     private text: PointText;
 
-    constructor(parent: IBlock, content: string)
+    constructor(parent: IBlock, args: string[])
     {
         super(parent);
 
-        this.content = content;
+        this.content = args[0] || 'label';
+        this.style = args[1] || 'normal';
     }
 
     public draw(): void
@@ -23,7 +26,8 @@ export default class TextProp extends Prop
             content: this.content,
             fontSize: '1em',
             fillColor: 'white',
-            fontFamily: 'Roboto'
+            fontFamily: 'Roboto',
+            fontWeight: this.style
         });
     }
 

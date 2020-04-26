@@ -14,9 +14,9 @@ export default class Sprite implements IClass
             [
                 { type: 'text', args: ['go to'] },
                 { type: 'text', args: ['x:'] },
-                { type: 'reporter' },
+                { type: 'reporter', args: ['x'] },
                 { type: 'text', args: ['y:'] },
-                { type: 'reporter' }
+                { type: 'reporter', args: ['y'] }
             ]
         }`, // go to
 
@@ -27,8 +27,19 @@ export default class Sprite implements IClass
             [
                 { type: 'text', args: ['set'] },
                 { type: 'text', args: ['x:'] },
-                { type: 'reporter' },
+                { type: 'reporter', args: ['x'] },
             ]
-        }` // set x
+        }`, // set x
+
+        `{
+            shape: 'STACK',
+            category: 'MOTION',
+            props:
+            [
+                { type: 'text', args: ['set'] },
+                { type: 'text', args: ['y:'] },
+                { type: 'reporter', args: ['y'] },
+            ]
+        }`, // set y
     ]
 }

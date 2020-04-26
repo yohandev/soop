@@ -30,6 +30,19 @@ export namespace Blocks
 
     export function create(desc: string): Block
     {
+        const parsed = parse(desc);
+        const block = mkshape(parsed.shape, parsed.colour) as Block;
+
+        for (const prop of parsed.props)
+        {
+            mkprop(block, prop);
+        }
+
+        return block;
+    }
+
+    export function parse(desc: string): { shape: string, colour: Colour, props: { type: string, args?: any[] }[] }
+    {
         const parsed = eval(`(${desc})`);
 
         const shape = parsed["shape"].toLowerCase().trim() as string;
@@ -37,14 +50,8 @@ export namespace Blocks
         const props = parsed["props"] as { type: string, args?: any[] }[];
 
         const colour = (Colours as any)[category];
-        const block = mkshape(shape, colour) as Block;
 
-        for (const prop of props)
-        {
-            mkprop(block, prop);
-        }
-
-        return block;
+        return { shape, colour, props };
     }
 
     function mkshape(shape: string, colour: Colour)
