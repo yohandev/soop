@@ -1,9 +1,7 @@
 import "../res/styles.css";
 import Cursor from "./v4/Cursor";
 import Workspace from "./v4/Workspace";
-import DefineBlock from "./v4/DefineBlock";
 import Editor from "./v4/Editor";
-import Sprite from "./v4/Sprite";
 import BlockEditor from "./v4/BlockEditor";
 
 function init()

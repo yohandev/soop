@@ -3,6 +3,7 @@ import Class from "./Class";
 import Editor from "./Editor";
 import { Blocks } from "./Blocks";
 import Workspace from "./Workspace";
+import OverrideBlock from "./OverrideBlock";
 
 export default class Palette
 {
@@ -26,7 +27,8 @@ export default class Palette
 
         for (const desc of this.target.blocks)
         {
-            const block = Blocks.create(desc);
+            const parsed = Blocks.parse(desc);
+            let block = Blocks.create(desc);
             
             block["draw_display"]();
             block.group.scale(0.7);
@@ -36,6 +38,22 @@ export default class Palette
             this.m_scroll_pane.addChild(block.group);
 
             pos.y += block.shape.height + Editor.padding * 2;
+
+            console.log(parsed);
+
+            if (parsed.virtual === true)
+            {
+                block = new OverrideBlock(desc);
+
+                block["draw_display"]();
+                block.group.scale(0.7);
+                block.group.bounds.topLeft = pos;
+                block.shape.path.onMouseDown = e => Workspace.active.add(new OverrideBlock(desc));
+
+                this.m_scroll_pane.addChild(block.group);
+
+                pos.y += block.shape.height + Editor.padding * 2;
+            }
         }
     }
 

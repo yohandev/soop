@@ -41,17 +41,18 @@ export namespace Blocks
         return block;
     }
 
-    export function parse(desc: string): { shape: string, colour: Colour, props: { type: string, args?: any[] }[] }
+    export function parse(desc: string): { shape: string, colour: Colour, props: { type: string, args?: any[] }[], virtual: boolean }
     {
         const parsed = eval(`(${desc})`);
 
         const shape = parsed["shape"].toLowerCase().trim() as string;
         const category = parsed["category"] as string;
         const props = parsed["props"] as { type: string, args?: any[] }[];
+        const virtual = parsed["virtual"] as boolean || false;
 
         const colour = (Colours as any)[category];
 
-        return { shape, colour, props };
+        return { shape, colour, props, virtual };
     }
 
     function mkshape(shape: string, colour: Colour)

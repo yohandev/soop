@@ -19,7 +19,8 @@ export default class Sprite implements IClass
                 { type: 'reporter', args: ['x'] },
                 { type: 'text', args: ['y:'] },
                 { type: 'reporter', args: ['y'] }
-            ]
+            ],
+            virtual: true
         }`, // go to
 
         `{
