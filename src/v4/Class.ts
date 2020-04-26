@@ -28,6 +28,13 @@ export default class Class implements IClass
         Palette.active = this.m_palette;
     }
 
+    public add(desc: string)
+    {
+        this.m_blocks.push(desc);
+
+        this.m_palette.draw();
+    }
+
     public get blocks(): string[]
     {
         if (this.m_extends)

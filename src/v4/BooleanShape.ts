@@ -23,7 +23,7 @@ export default class BooleanShape extends Shape
 
     public set width(n: number) // 1-4 inclusive
     {
-        const a = n - this.width;
+        const a = Math.max(70, n) - this.width;
 
         this.range(1, 4).forEach(n => this.m_path.segments[n].point.x += a);
     }

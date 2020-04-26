@@ -4,6 +4,8 @@ import { Blocks } from "./Blocks";
 import Block from "./Block";
 import { Colours } from "./Colour";
 import Shapes from "./Shapes";
+import Workspace from "./Workspace";
+import DefineBlock from "./DefineBlock";
 
 export default class BlockEditor
 {
@@ -139,6 +141,52 @@ export default class BlockEditor
 
         this.btns = new Group([text_btn, rep_btn, bool_btn]);
         this.btns.bounds.center = this.pane.topCenter.clone().add([0, 300]);
+
+        const rect2 = new Path.Rectangle
+        ({
+            width: 120,
+            height: 50,
+            fillColor: Editor.Colours.SUBTEXT,
+            radius: 4,
+            //opacity: 0.5
+        })
+        const ok = new PointText
+        ({
+            content: "✔",
+            fillColor: Editor.Colours.TEXT,
+            justification: 'center',
+            fontFamily: 'Roboto',
+            fontSize: '1em'
+        })
+        ok.bounds.center = rect2.bounds.clone().center;
+        const ok_btn = new Group([rect2.clone(), ok]);
+        ok_btn.bounds.bottomRight = this.pane.bottomRight.clone().add([-20, -20]);
+        ok_btn.onClick = e => 
+        {
+            this.hide();
+
+            const d = this.desc();
+
+            Editor.active.add(d);
+            Workspace.active.add(new DefineBlock(d));
+        }
+        this.btns.addChild(ok_btn);
+
+        const cancel = new PointText
+        ({
+            content: "cancel",
+            fillColor: Editor.Colours.TEXT,
+            justification: 'center',
+            fontFamily: 'Roboto',
+            fontSize: '1em'
+        })
+        cancel.bounds.center = rect2.bounds.center;
+        const cancel_btn = new Group([rect2, cancel]);
+        cancel_btn.bounds.bottomRight = this.pane.bottomRight.clone().add([-150, -20]);
+        cancel_btn.onClick = e => 
+        {
+            this.hide();
+        }
 
         // close btn
         const x = new CompoundPath
