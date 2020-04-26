@@ -7,7 +7,7 @@ export default class AndBlock extends BooleanBlock
 {
     constructor()
     {
-        super(Colours.OPERATOR);
+        super(Colours.OPERATORS);
 
         this.add(BooleanInputProp);
         this.add(TextProp, "and");

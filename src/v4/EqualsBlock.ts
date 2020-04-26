@@ -7,7 +7,7 @@ export default class EqualsBlock extends BooleanBlock
 {
     constructor()
     {
-        super(Colours.OPERATOR);
+        super(Colours.OPERATORS);
 
         this.add(ReporterInputProp);
         this.add(TextProp, "=");

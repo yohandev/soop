@@ -1,12 +1,19 @@
 import Class from "./Class";
-import { Symbol, Path, CompoundPath, Group } from "paper";
+import { Symbol, Path, CompoundPath, Group, PointText } from "paper";
 import Workspace from "./Workspace";
+import { Colours } from "./Colour";
 
 export default class Editor
 {
     public static readonly padding = 20;
     public static readonly palette_width = 300;
     public static readonly player_width = 480 / 2;
+
+    public static readonly Colours =
+    {
+        DARK: '#26282e',
+        LIGHT: '#303840'
+    }
 
     private static m_active: Class;
     private static m_classes: Class[];
@@ -30,7 +37,7 @@ export default class Editor
                 new Path.Rectangle({ position: [0, 0], width: 20, height: 2, radius: 3 }),
                 new Path.Rectangle({ position: [0, 0], width: 2, height: 20, radius: 3 }),
             ],
-            fillColor: '#303840',
+            fillColor: Editor.Colours.LIGHT,
             //opacity: 0.1,
             rotation: 45
         }))
@@ -42,8 +49,8 @@ export default class Editor
             width: this.width() - this.palette_width - this.player_width - this.padding * 3,
             height: this.height() - this.padding * 2,
             radius: 10,
-            strokeColor: '#303840',
-            fillColor: '#26282e',
+            strokeColor: Editor.Colours.LIGHT,
+            fillColor: Editor.Colours.DARK,
             strokeWidth: 7
         });
 
@@ -77,8 +84,8 @@ export default class Editor
             width: this.palette_width,
             height: this.height() - this.padding * 2,
             radius: 10,
-            strokeColor: '#303840',
-            fillColor: '#26282e',
+            strokeColor: Editor.Colours.LIGHT,
+            fillColor: Editor.Colours.DARK,
             strokeWidth: 7
         });
 
@@ -86,10 +93,37 @@ export default class Editor
         ({
             x: this.padding,
             y: this.padding,
-            width: 50,
+            width: 60,
             height: this.height() - this.padding * 2,
-            fillColor: '#303840',
+            fillColor: Editor.Colours.LIGHT,
         });
+
+        const circs = new Group();
+        const dy = tabs.bounds.height / 8;
+        let y = this.padding - dy / 2;
+        for (const col in Colours)
+        {
+            const c = (Colours as any)[col];
+
+            circs.addChild(new Path.Circle
+            ({
+                center: [tabs.bounds.center.x, y += dy],
+                radius: 15,
+                fillColor: c.fill,
+                strokeColor: c.stroke,
+                strokeWidth: 2
+            }))
+
+            circs.addChild(new PointText
+            ({
+                point: [tabs.bounds.center.x, y + 30],
+                content: col.toLowerCase(),
+                fillColor: 'white',
+                justification: 'center',
+                fontFamily: 'Roboto',
+                fontSize: '0.7em'
+            }))
+        }
 
         const palette_pane = new Group
         ({
@@ -97,7 +131,8 @@ export default class Editor
             [
                 /* clipping */ rect2,
                 /* border */ rect2.clone(),
-                /* tabs bg */ tabs
+                /* tabs bg */ tabs,
+                /* tabs*/ circs
             ],
             clipped: true
         })
