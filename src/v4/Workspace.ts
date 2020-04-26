@@ -40,6 +40,9 @@ export default class Workspace
         this.blocks.push(b);
 
         b.draw();
+
+        b.shape.path.onMouseDrag = e => Cursor.drag(b, e); // draggable
+        this.group.addChild(b.group); // scroll & clip
     }
 
     public disconnect(block: Block): boolean

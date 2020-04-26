@@ -3,6 +3,7 @@ import { Symbol, Path, CompoundPath, Group, PointText } from "paper";
 import Workspace from "./Workspace";
 import { Colours } from "./Colour";
 import Palette from "./Palette";
+import SpriteClass from "./SpriteClass";
 
 export default class Editor
 {
@@ -24,7 +25,7 @@ export default class Editor
 
     public static init(): void
     {
-        this.m_classes = [this.active = new Class(undefined)];
+        this.m_classes = [this.active = new Class(new SpriteClass())];
 
         this.draw();
     }

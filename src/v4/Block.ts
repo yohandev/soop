@@ -2,10 +2,10 @@ import IBlock from "./IBlock";
 import Prop from "./Prop";
 import Shape from "./Shape";
 import { Colour } from "./Colour";
-import { Group, Rectangle } from "paper";
-import Cursor from "./Cursor";
+import { Group, Rectangle, Point } from "paper";
+//import Cursor from "./Cursor";
 import IVisitable from "./IVisitable";
-import Workspace from "./Workspace";
+//import Workspace from "./Workspace";
 
 export default abstract class Block implements IBlock, IVisitable
 {
@@ -29,29 +29,32 @@ export default abstract class Block implements IBlock, IVisitable
 
     public draw() // recursively draw
     {
-        // @ts-ignore
-        let pos = Editor.script_pane.position; // default pos
+        let pos = new Point(0, 0);
+        let drag = undefined;
 
         if (this.m_group)
         {
             pos = this.m_group.bounds.topLeft; // previous position
+            drag = this.shape.path.onMouseDrag; // previous drag behaviour
         }
 
         this.draw_display(); // draw display
         
         this.m_group.bounds.topLeft = pos; // adjust self previous position
 
-        this.shape.path.onMouseDrag = e => Cursor.drag(this, e); // draggable
-
-        Workspace.active.group.addChild(this.m_group) // add to workspace
+        this.shape.path.onMouseDrag = drag; // adjust self drag behaviour
     }
 
     public draw_display()
     {
         this.shape.erase(); // erase itself(important: clears events)
 
+        let workspace = undefined; //  workspace group
+
         if (this.m_group)
         {
+            workspace = this.m_group.parent;
+
             this.m_group.onMouseDrag = undefined;
             this.m_group.remove();
         }
@@ -88,6 +91,11 @@ export default abstract class Block implements IBlock, IVisitable
         this.shape.height = maxh; // height adjust self
 
         this.shape.colour(this.colour); // color self
+
+        if (workspace)
+        {
+            workspace.addChild(this.m_group); // add back to workspace
+        }
     }
 
     protected add<T extends Prop>(prop: new(parent: Block, ...args: any[]) => T, ...args: any[]) // add prop
