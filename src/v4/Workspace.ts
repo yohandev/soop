@@ -1,7 +1,8 @@
 import Block from "./Block";
 import Cursor from "./Cursor";
 import Prop from "./Prop";
-import { Group, Point } from "paper";
+import { Group, Point, Rectangle } from "paper";
+import Editor from "./Editor";
 
 export default class Workspace
 {
@@ -18,6 +19,17 @@ export default class Workspace
 
         window.onwheel = (e: WheelEvent) =>
         {
+            if (Workspace.active !== this)
+            {
+                return;
+            }
+
+            // @ts-ignore
+            if (!Editor.script_pane.bounds.intersects(new Rectangle([e.x, e.y], [1, 1])))
+            {
+                return;
+            }
+            
             // @ts-ignore
             this.group.translate([-e.deltaX, -e.deltaY]);
         }
