@@ -6,3 +6,4 @@ simple object oriented programming
 project gen - https://createapp.dev/
 bundler - https://parceljs.org/
 lang - https://www.typescriptlang.org/
+graphics - https://svgjs.com/
