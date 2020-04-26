@@ -30,7 +30,8 @@ export default class Editor
 
     public static init(): void
     {
-        this.m_classes = [this.active = new Class("Player", new Sprite())];
+        this.m_classes = [new Class("Player", new Sprite())];
+        this.active = this.m_classes[0];
 
         this.draw();
     }
@@ -249,5 +250,10 @@ export default class Editor
     {
         this.m_active = c;
         this.m_active.show();
+    }
+
+    public static get classes(): Class[]
+    {
+        return this.m_classes;
     }
 }
