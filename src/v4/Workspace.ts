@@ -41,6 +41,7 @@ export default class Workspace
 
         b.draw();
 
+        b.group.position = this.group.parent.bounds.center; // center view
         b.shape.path.onMouseDrag = e => Cursor.drag(b, e); // draggable
         this.group.addChild(b.group); // scroll & clip
     }

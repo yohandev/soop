@@ -1,10 +1,6 @@
 import "../res/styles.css";
-import GoToBlock from "./v4/GoToBlock";
-import PositionXBlock from "./v4/PositionXBlock";
 import Cursor from "./v4/Cursor";
 import Workspace from "./v4/Workspace";
-import EqualsBlock from "./v4/EqualsBlock";
-import AndBlock from "./v4/AndBlock";
 import DefineBlock from "./v4/DefineBlock";
 import Editor from "./v4/Editor";
 
@@ -15,12 +11,6 @@ function init()
 	Cursor.init();
 	Editor.init();
 
-	Workspace.active.add(new GoToBlock());
-	Workspace.active.add(new GoToBlock());
-	Workspace.active.add(new GoToBlock());
-	Workspace.active.add(new EqualsBlock());
-	Workspace.active.add(new PositionXBlock());
-	Workspace.active.add(new AndBlock());
 	Workspace.active.add(new DefineBlock());
 
 	//COMMENTED OUT CODE BELOW IS DEV TOOL TO FIND WHICH VERTICES IN THE SVG PATHS HAVE TO DO WITH SCALING

@@ -2,6 +2,7 @@ import { Group, Point } from "paper";
 import Class from "./Class";
 import Editor from "./Editor";
 import { Blocks } from "./Blocks";
+import Workspace from "./Workspace";
 
 export default class Palette
 {
@@ -28,8 +29,9 @@ export default class Palette
             const block = Blocks.create(desc);
             
             block["draw_display"]();
-            block.group.scale(0.5);
+            block.group.scale(0.7);
             block.group.bounds.topLeft = pos;
+            block.shape.path.onMouseDown = e => Workspace.active.add(Blocks.create(desc));
 
             this.m_scroll_pane.addChild(block.group);
 
