@@ -5,6 +5,8 @@ import { Colour } from "./Colour";
 import { Group, Rectangle, Point } from "paper";
 import Cursor from "./Cursor";
 import IVisitable from "./IVisitable";
+import Workspace from "./Workspace";
+import Editor from "./Editor";
 
 export default abstract class Block implements IBlock, IVisitable
 {
@@ -29,7 +31,7 @@ export default abstract class Block implements IBlock, IVisitable
     public draw() // recursively draw
     {
         // @ts-ignore
-        let pos = Point.random().multiply(paper.project.view.size); // default pos
+        let pos = Point.random().multiply(Editor.script_pane.bounds.size); // default pos
 
         this.shape.erase(); // erase itself(important: clears events)
 
@@ -77,6 +79,8 @@ export default abstract class Block implements IBlock, IVisitable
         this.shape.colour(this.colour); // color self
 
         this.shape.path.onMouseDrag = e => Cursor.drag(this, e); // draggable
+
+        Workspace.active.group.addChild(this.m_group) // add to workspace
     }
 
     protected add<T extends Prop>(prop: new(parent: Block, ...args: any[]) => T, ...args: any[]) // add prop

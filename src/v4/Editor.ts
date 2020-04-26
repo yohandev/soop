@@ -1,5 +1,6 @@
 import Class from "./Class";
 import { Symbol, Path, CompoundPath, Group } from "paper";
+import Workspace from "./Workspace";
 
 export default class Editor
 {
@@ -10,11 +11,11 @@ export default class Editor
     private static m_active: Class;
     private static m_classes: Class[];
 
+    private static m_script_pane: Group;
+
     public static init(): void
     {
-        this.m_classes = [];
-
-        this.m_classes.push(new Class(undefined)); // default class
+        this.m_classes = [this.active = new Class(undefined)];
 
         this.draw();
     }
@@ -56,13 +57,14 @@ export default class Editor
             }
         }
 
-        const script_pane = new Group
+        this.m_script_pane = new Group
         ({
             children:
             [
                 /* clipping */ rect,
                 /* border */ rect.clone(),
-                /* pattern */ crosses
+                /* pattern */ crosses,
+                /* scripts */ Workspace.active.group
             ],
             clipped: true
         });
@@ -78,6 +80,11 @@ export default class Editor
         return paper.project.view.size.height;
     }
 
+    public static get script_pane(): Group
+    {
+        return this.m_script_pane;
+    }
+
     public static get active(): Class
     {
         return this.m_active;
@@ -86,5 +93,6 @@ export default class Editor
     public static set active(c: Class)
     {
         this.m_active = c;
+        this.m_active.show();
     }
 }

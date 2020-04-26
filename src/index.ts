@@ -21,8 +21,6 @@ function init()
 	Cursor.init();
 	Editor.init();
 
-	Workspace.active = new Workspace();
-	
 	Workspace.active.add(new GoToBlock());
 	Workspace.active.add(new GoToBlock());
 	Workspace.active.add(new GoToBlock());
@@ -30,8 +28,6 @@ function init()
 	Workspace.active.add(new PositionXBlock());
 	Workspace.active.add(new AndBlock());
 	Workspace.active.add(new DefineBlock());
-
-	Workspace.active.load();
 
 	// Cursor.init(); // init cursor
 	// Background.init();

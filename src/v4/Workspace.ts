@@ -1,16 +1,26 @@
 import Block from "./Block";
 import Cursor from "./Cursor";
 import Prop from "./Prop";
+import { Group, Point } from "paper";
 
 export default class Workspace
 {
     private static m_active: Workspace; // visible workspace
 
     private blocks: Block[]; // floating blocks
+    
+    public readonly group: Group; // scroll pane group
 
     constructor()
     {
         this.blocks = [];
+        this.group = new Group();
+
+        window.onwheel = (e: WheelEvent) =>
+        {
+            // @ts-ignore
+            this.group.translate([-e.deltaX, -e.deltaY]);
+        }
     }
 
     public add(b: Block)
@@ -67,12 +77,12 @@ export default class Workspace
 
     public load(): void
     {
-        this.blocks.forEach(b => b.group.visible = true);
+        this.group.visible = true;
     }
 
     public unload(): void
     {
-        this.blocks.forEach(b => b.group.visible = false);
+        this.group.visible = false;
     }
 
     public highlight_loose(): void
