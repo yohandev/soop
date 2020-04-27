@@ -8,7 +8,7 @@ export default class Graphics
     {
         this.m_panes =
         [
-            SVG().addTo('#editor')
+            SVG().addTo("body").id("editor").size('100%', '100%')
         ]
     }
 }

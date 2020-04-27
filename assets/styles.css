@@ -1,77 +1,17 @@
 html, body
 {
+    /* fullscreen */
     width: 100%;
     height: 100%;
     overflow: hidden;
+
+    /* no-scroll */
     border-collapse: collapse;
     padding: 0;
     margin: 0;
 }
 
-.left
+#editor
 {
-    float: left;
-}
-
-.middle
-{
-    float: middle;
-}
-
-.right
-{
-    float: right;
-}
-
-#app
-{
-    height: 100%;
-}
-
-#palette-pane
-{
-    background-color: lawngreen;
-    max-width: 300px;
-    width: 15%;
-    min-height: 100%;
-    
-}
-
-#workspace-pane
-{    
-    width: 100%;
-    background-color: khaki;
-    min-height: 100%;
-}
-
-#player-browser-pane
-{
-    max-width: 480px;
-    width: 30%;
-}
-
-#player-pane
-{
-    position: relative;
-    background-color: aliceblue;
-    padding-top: 75%;
-    overflow: hidden;
-}
-
-#browser-pane
-{
-    position: absolute;
-    background-color: lightcoral;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-}
-
-#player
-{
-    position: absolute;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
+    background-color: #26282e;
 }
