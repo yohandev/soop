@@ -3,7 +3,7 @@ export default class BlockDescription
     public readonly shape: string;
     public readonly category: string;
 
-    public readonly props: { type: string, args: any[] };
+    public readonly props: { type: string, args: any[] }[];
 
     constructor(serialized: string)
     {
