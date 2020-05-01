@@ -1,4 +1,9 @@
-import { Svg, SVG, extend, Rect, Number } from "@svgdotjs/svg.js";
+import { Svg, SVG, Shape, Rect, Number } from "@svgdotjs/svg.js";
+
+class Empty extends Rect
+{
+
+}
 
 class Rounded extends Rect
 {
@@ -21,14 +26,6 @@ export default class Graphics
             SVG().addTo("body").id("editor").size('100%', '100%')
         ]
 
-        const group = this.m_panes[0].group();
-        
-        group.rect(20, 20).move(50, 100);
-        group.rect(1, 1).move(50, 100).fill('red');
-        
-        const bbox = group.rbox();
-        //group.scale(4, 10, bbox.x + bbox.width / 2, bbox.y + bbox.height / 2);
-
-        group.put(new Rounded().size(30, 40).fill('blue').move(50, 100).height(400));        
+        this.m_panes[0].rect(200, 200).move(300, 300).x(0);
     }
 }
